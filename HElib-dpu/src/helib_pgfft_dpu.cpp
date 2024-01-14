@@ -70,7 +70,7 @@ void dpu_hello_world()
     struct dpu_set_t set, dpu;
     uint32_t nr_dpus;
 
-    DPU_ASSERT(dpu_alloc(4, "backend=simulator", &set));
+    DPU_ASSERT(dpu_alloc(4, NULL, &set));
     DPU_ASSERT(dpu_load(set, DPU_BINARY_HELLO_WORLD, NULL));
     DPU_ASSERT(dpu_get_nr_dpus(set, &nr_dpus));
 
@@ -90,7 +90,7 @@ std::complex<double> dpu_mul(std::complex<double> a, std::complex<double> b)
 {
     struct dpu_set_t set, dpu;
 
-    DPU_ASSERT(dpu_alloc(1, "backend=simulator", &set));
+    DPU_ASSERT(dpu_alloc(1, NULL, &set));
     DPU_ASSERT(dpu_load(set, DPU_BINARY_MUL, NULL));
 
     dpu_complex dpu_a = convert_to_dpu_complex(a);
@@ -298,7 +298,7 @@ void dpu_new_fft_ifft_layer(
         Warning("Error in dpu_new_fft_layer: per iteration blocks " + std::to_string(per_iteration_blocks));
     }
 
-    DPU_ASSERT(dpu_alloc(nr_dpus, "backend=simulator", &set));
+    DPU_ASSERT(dpu_alloc(nr_dpus, NULL, &set));
 
     if (fft_ifft == FFT)
     {
@@ -488,7 +488,7 @@ void dpu_new_fft_ifft_layer_2(
     uint32_t per_dpu_blocks = blocks / nr_dpus;
     uint32_t per_block_dpus = nr_dpus / blocks;
 
-    DPU_ASSERT(dpu_alloc(nr_dpus, "backend=simulator", &set));
+    DPU_ASSERT(dpu_alloc(nr_dpus, NULL, &set));
 
     if (fft_ifft == FFT)
     {
@@ -762,7 +762,7 @@ void dpu_fwd_butterfly_loop(
     // Info("Size per dpu " + std::to_string(per_dpu_size));
     // Info("Size last dpu " + std::to_string(last_dpu_size));
 
-    DPU_ASSERT(dpu_alloc(nr_dpus, "backend=simulator", &set));
+    DPU_ASSERT(dpu_alloc(nr_dpus, NULL, &set));
     DPU_ASSERT(dpu_load(set, DPU_BINARY_FWD_BUTTERFLY_LOOP, NULL));
 
     // convert std::complex arrays to dpu_complex arrays
@@ -825,7 +825,7 @@ void dpu_fwd_butterfly_loop_2(
 
     GET_NR_DPUS_AND_SIZE_PER_DPU(size, nr_dpus, per_dpu_size, last_dpu_size);
 
-    DPU_ASSERT(dpu_alloc(nr_dpus, "backend=simulator", &set));
+    DPU_ASSERT(dpu_alloc(nr_dpus, NULL, &set));
     DPU_ASSERT(dpu_load(set, DPU_BINARY_MULTI_FWD_BUTTERFLY_LOOP, NULL));
 
     // convert std::complex arrays to dpu_complex arrays
@@ -878,7 +878,7 @@ void dpu_inv_butterfly_loop(
 
     GET_NR_DPUS_AND_SIZE_PER_DPU(size, nr_dpus, per_dpu_size, last_dpu_size);
 
-    DPU_ASSERT(dpu_alloc(nr_dpus, "backend=simulator", &set));
+    DPU_ASSERT(dpu_alloc(nr_dpus, NULL, &set));
     DPU_ASSERT(dpu_load(set, DPU_BINARY_INV_BUTTERFLY_LOOP, NULL));
 
     // convert std::complex arrays to dpu_complex arrays
@@ -929,7 +929,7 @@ void dpu_inv_butterfly_loop_2(
 
     GET_NR_DPUS_AND_SIZE_PER_DPU(size, nr_dpus, per_dpu_size, last_dpu_size);
 
-    DPU_ASSERT(dpu_alloc(nr_dpus, "backend=simulator", &set));
+    DPU_ASSERT(dpu_alloc(nr_dpus, NULL, &set));
     DPU_ASSERT(dpu_load(set, DPU_BINARY_MULTI_INV_BUTTERFLY_LOOP, NULL));
 
     // convert std::complex arrays to dpu_complex arrays
@@ -976,7 +976,7 @@ void dpu_new_fft_last_two_layers(std::complex<double> *xp, long blocks, const ch
 
     GET_NR_DPUS_AND_BLOCKS_PER_DPU(blocks, nr_dpus, per_dpu_blocks, last_dpu_blocks);
 
-    DPU_ASSERT(dpu_alloc(nr_dpus, "backend=simulator", &set));
+    DPU_ASSERT(dpu_alloc(nr_dpus, NULL, &set));
     DPU_ASSERT(dpu_load(set, dpu_binary, NULL));
 
     // convert std::complex array to dpu_complex array
@@ -1035,7 +1035,7 @@ void dpu_new_ifft_first_two_layers(std::complex<double> *xp, long blocks, const 
 
     GET_NR_DPUS_AND_BLOCKS_PER_DPU(blocks, nr_dpus, per_dpu_blocks, last_dpu_blocks);
 
-    DPU_ASSERT(dpu_alloc(nr_dpus, "backend=simulator", &set));
+    DPU_ASSERT(dpu_alloc(nr_dpus, NULL, &set));
     DPU_ASSERT(dpu_load(set, dpu_binary, NULL));
 
     // convert std::complex array to dpu_complex array
