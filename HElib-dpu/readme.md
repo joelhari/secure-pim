@@ -20,12 +20,13 @@ The programs in the [single-tasklet](./src/dpu/single-tasklet/) subfolder can on
 
 To compile the [HElib example programs](./src/examples) run (inside this directory):
 ``` terminal
-make all -j8 NR_DPUS=64 USE_DPU=1 USE_MULTI_TASKLETS=1
+make all -j8 NR_DPUS=64 USE_DPU=1 USE_MULTI_TASKLETS=1 PGFFT_DISABLE_SIMD=1
 ```
 The arguments are:
 - `NR_DPUS=[1, MAX_AVAILABLE_DPUs]`: number of DPUs that will be used
 - `USE_DPU=[0, 1]`: if the original HElib implementation `=0` or the DPU implementation `=1` will be used
 - `USE_MULTI_TASKLETS=[0, 1]`: if the DPU programs that can only run with one tasklet `=0` or those that can run with multiple tasklets `=1` will be used (if available)
+- `PGFFT_DISABLE_SIMD=[0, 1]`: disable the use of SIMD methods `=1` (needs to be disabled if using DPUs, since the DPU programs are only called from the non-SIMD methods)
 
 When changing any of the above arguments, make sure to run `make clean` before in order for the changed arguments to be applyed correctly.
 
@@ -53,12 +54,13 @@ To run any of the example programs execute:
 
 To compile the [Tests](./src/tests) run (inside this directory):
 ``` terminal
-make tests -j8 NR_DPUS=64 USE_DPU=0 USE_MULTI_TASKLETS=1
+make tests -j8 NR_DPUS=64 USE_DPU=0 USE_MULTI_TASKLETS=1 PGFFT_DISABLE_SIMD=0
 ```
 The arguments are:
 - `NR_DPUS=[1, MAX_AVAILABLE_DPUs]`: number of DPUs that will be used
 - `USE_DPU=0`: make sure to compile with `USE_DPU=0` for the tests to run using the original HElib implementation
-- `USE_MULTI_TASKLETS=[0, 1]`: if the DPU programs that can only run with one tasklet `=0` or those that can run with multiple tasklets `=1` will be used
+- `USE_MULTI_TASKLETS=[0, 1]`: if the DPU programs that can only run with one tasklet `=0` or those that can run with multiple tasklets `=1` will be used (if available)
+- `PGFFT_DISABLE_SIMD=[0, 1]`: disable the use of SIMD methods `=1` (needs to be disabled if using DPUs, since the DPU programs are only called from the non-SIMD methods)
 
 When changing any of the above arguments, make sure to run `make clean` before in order for the changed arguments to be applyed correctly.
 
