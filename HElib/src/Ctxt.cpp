@@ -33,15 +33,6 @@
 #include <helib/sample.h>
 #include "internal_symbols.h"
 
-
-/* ****************************************************************************** */
-/* DPU HOST PROGRAMS                                                              */
-
-#include "helib_ctxt_dpu.hpp"
-
-/* ****************************************************************************** */
-
-
 namespace helib {
 
 extern int fhe_watcher;
@@ -1414,12 +1405,7 @@ static NTL::xdouble NoiseNorm(NTL::xdouble noise1,
 // Add/subtract another ciphertext (depending on the negative flag)
 void Ctxt::addCtxt(const Ctxt& other, bool negative)
 {
-  LOG_FUNCTION();
-  HELIB_NTIMER_START(time_addCtxt);
-
   HELIB_TIMER_START;
-
-  HELIB_NTIMER_START(time_addCtxt_part_1);
 
   // Sanity check: same context and public key
   assertEq(&context, &other.context, "Context mismatch");
@@ -1439,9 +1425,6 @@ void Ctxt::addCtxt(const Ctxt& other, bool negative)
     return;
   }
 
-  HELIB_NTIMER_STOP(time_addCtxt_part_1);
-  HELIB_NTIMER_START(time_addCtxt_part_2);
-
   // Verify that the plaintext spaces are compatible
   if (isCKKS()) {
     assertEq(getPtxtSpace(), 1l, "Plaintext spaces incompatible");
@@ -1451,9 +1434,6 @@ void Ctxt::addCtxt(const Ctxt& other, bool negative)
 
   const Ctxt* other_pt = &other;
 
-  HELIB_NTIMER_STOP(time_addCtxt_part_2);
-  HELIB_NTIMER_START(time_addCtxt_part_3);
-
   // make other ptxtSpace match
   Ctxt tmp(pubKey, other.ptxtSpace); // a temporary empty ciphertext
   if (ptxtSpace != other_pt->ptxtSpace) {
@@ -1461,9 +1441,6 @@ void Ctxt::addCtxt(const Ctxt& other, bool negative)
     tmp.reducePtxtSpace(ptxtSpace);
     other_pt = &tmp;
   }
-
-  HELIB_NTIMER_STOP(time_addCtxt_part_3);
-  HELIB_NTIMER_START(time_addCtxt_part_4);
 
   // Match the prime-sets, mod-UP the arguments if needed
   IndexSet s = other_pt->primeSet / primeSet; // set-minus
@@ -1478,9 +1455,6 @@ void Ctxt::addCtxt(const Ctxt& other, bool negative)
     }
     tmp.modUpToSet(s);
   }
-
-  HELIB_NTIMER_STOP(time_addCtxt_part_4);
-  HELIB_NTIMER_START(time_addCtxt_part_5);
 
   // std::cerr << "*** " << ratFactor << " " << other_pt->ratFactor << "\n";
 
@@ -1551,9 +1525,6 @@ void Ctxt::addCtxt(const Ctxt& other, bool negative)
     assertEq(NTL::GCD(e2, ptxtSpace), 1l, "e2 and ptxtSpace not co-prime");
   }
 
-  HELIB_NTIMER_STOP(time_addCtxt_part_5);
-  HELIB_NTIMER_START(time_addCtxt_part_6);
-
   if (e2 != 1) {
     if (other_pt != &tmp) {
       tmp = other;
@@ -1564,11 +1535,6 @@ void Ctxt::addCtxt(const Ctxt& other, bool negative)
   if (e1 != 1)
     mulIntFactor(e1);
 
-  HELIB_NTIMER_STOP(time_addCtxt_part_6);
-  HELIB_NTIMER_START(time_addCtxt_part_7);
-#ifdef USE_DPU
-  dpu_addCtxt(parts, other_pt->parts);
-#else
   // Go over the parts of other, for each one check if
   // there is a matching part in *this
   for (size_t i = 0; i < other_pt->parts.size(); i++) {
@@ -1585,13 +1551,8 @@ void Ctxt::addCtxt(const Ctxt& other, bool negative)
         parts.back().Negate();
     }
   }
-#endif
-  HELIB_NTIMER_STOP(time_addCtxt_part_7);
-  HELIB_NTIMER_START(time_addCtxt_part_8);
   ptxtMag += other_pt->ptxtMag;
   noiseBound += other_pt->noiseBound;
-  HELIB_NTIMER_STOP(time_addCtxt_part_8);
-  HELIB_NTIMER_STOP(time_addCtxt);
 }
 
 // long fhe_disable_intFactor = 0;
