@@ -13,7 +13,8 @@ all: $(DPU_TARGETS)
 
 %: %.c
 	$(TARGET_DIR_GUARD)
-	dpu-upmem-dpurte-clang $(INCLUDE) -DSTACK_SIZE_DEFAULT=6144 -DNR_TASKLETS=1 -o $(TARGET_DIR)/$@ $<
+	@dpu-upmem-dpurte-clang $(INCLUDE) -DSTACK_SIZE_DEFAULT=6144 -DNR_TASKLETS=1 -o $(TARGET_DIR)/$@ $<
+	@echo "CXX <= $<"
 
 clean:
 	rm -f -r $(TARGET_DIR)
