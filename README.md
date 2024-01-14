@@ -47,7 +47,7 @@ tar -xvf upmem-2023.2.0-Linux-x86_64.tar.gz -C $HOME/upmem-sdk
 ```
 - Source the environment.
 ```
-source $HOME/upmem-sdk/upmem_env.sh
+source $HOME/upmem-sdk/upmem-2023.2.0-Linux-x86_64/upmem_env.sh
 ```
 
 ### Library paths
