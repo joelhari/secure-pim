@@ -1,0 +1,9 @@
+.vscode
+**/build
+out
+results
+
+**/src/*.o
+**/src/examples/*.o
+**/src/**/*.o
+**.log
