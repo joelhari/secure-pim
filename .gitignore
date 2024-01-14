@@ -2,6 +2,7 @@
 **/build
 out
 results
+sysinfo
 
 **/src/*.o
 **/src/examples/*.o
