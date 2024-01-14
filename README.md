@@ -22,6 +22,7 @@ cd gmp-6.3.0
 ./configure 
 make 
 sudo make install
+sudo ldconfig
 ```
 - This will build and install `gmp` in `/usr/local/lib` by default.
 
