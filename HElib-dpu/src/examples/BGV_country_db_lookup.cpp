@@ -74,6 +74,8 @@ std::vector<std::pair<std::string, std::string>> read_csv(std::string filename)
 
 int main(int argc, char* argv[])
 {
+  HELIB_NTIMER_START(time_total);
+
   /************ HElib boiler plate ************/
 
   // Note: The parameters have been chosen to provide a somewhat
@@ -251,10 +253,10 @@ int main(int argc, char* argv[])
   /** Create the query **/
 
   // Read in query from the command line
-  std::string query_string;
-  std::cout << "\nPlease enter the name of an European Country: ";
+  std::string query_string = "Switzerland";
+  // std::cout << "\nPlease enter the name of an European Country: ";
   // std::cin >> query_string;
-  std::getline(std::cin, query_string);
+  // std::getline(std::cin, query_string);
   std::cout << "Looking for the Capital of " << query_string << std::endl;
   std::cout << "This may take few minutes ... " << std::endl;
 
@@ -331,6 +333,12 @@ int main(int argc, char* argv[])
   std::cout << "\nQuery result: " << string_result << std::endl;
   helib::printNamedTimer(std::cout, "timer_TotalQuery");
 
+  HELIB_NTIMER_STOP(time_total);
+
+  std::cout << "\n\n";
+  helib::printNamedTimer(std::cout, "time_total");
+  std::cout << "\n";
+  print_configuration();
   print_timers();
 
   return 0;

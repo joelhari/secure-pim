@@ -641,12 +641,16 @@ fwd_butterfly_loop(
 {
    LOG_FUNCTION();
 
+   HELIB_NTIMER_START(time_fwd_butterfly_loop);
+
    // NOTE: C++11 guarantees that these reinterpret_cast's work as expected
    fwd_butterfly_loop_simd(
       size,
       reinterpret_cast<double*>(xp0),
       reinterpret_cast<double*>(xp1),
       reinterpret_cast<const double*>(wtab));
+
+   HELIB_NTIMER_STOP(time_fwd_butterfly_loop);
 }
 
 static inline void
@@ -687,12 +691,16 @@ inv_butterfly_loop(
    cmplx_t * RESTRICT xp1,
    const cmplx_t * RESTRICT wtab)
 {
+   HELIB_NTIMER_START(time_inv_butterfly_loop);
+
    // NOTE: C++11 guarantees that these reinterpret_cast's work as expected
    inv_butterfly_loop_simd(
       size,
       reinterpret_cast<double*>(xp0),
       reinterpret_cast<double*>(xp1),
       reinterpret_cast<const double*>(wtab));
+
+   HELIB_NTIMER_STOP(time_inv_butterfly_loop);
 }
 
 #else

@@ -8,6 +8,8 @@ using namespace helib;
 
 int main(int argc, char *argv[])
 {
+  HELIB_NTIMER_START(time_total);
+
   Context context =
       ContextBuilder<CKKS>()
           .m(16 * 1024)
@@ -40,15 +42,16 @@ int main(int argc, char *argv[])
 
   Ctxt c2 = c0;
   Info("-------------- start addition       --------------");
+  HELIB_NTIMER_START(time_addition);
   c2 += c1;
+  HELIB_NTIMER_STOP(time_addition);
   Info("-------------- stop addition        --------------");
 
   Ctxt c3 = c0;
   Info("-------------- start multiplication --------------");
-  HELIB_NTIMER_START(time_mul);
+  HELIB_NTIMER_START(time_multiplication);
   c3 *= c1;
-  HELIB_NTIMER_STOP(time_mul);
-  helib::printNamedTimer(std::cout, "time_mul");
+  HELIB_NTIMER_STOP(time_multiplication);
   Info("-------------- stop multiplication  --------------");
 
   PtxtArray pp2(context);
@@ -73,6 +76,14 @@ int main(int argc, char *argv[])
   double distance_mul = Distance(p3, pp3);
   cout << "distance multiplication = " << distance_mul << "\n";
 
+  HELIB_NTIMER_STOP(time_total);
+
+  std::cout << "\n\n";
+  helib::printNamedTimer(std::cout, "time_addition");
+  helib::printNamedTimer(std::cout, "time_multiplication");
+  helib::printNamedTimer(std::cout, "time_total");
+  std::cout << "\n";
+  print_configuration();
   print_timers();
 
   return 0;

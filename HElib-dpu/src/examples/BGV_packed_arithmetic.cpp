@@ -23,6 +23,8 @@
 
 int main(int argc, char* argv[])
 {
+  HELIB_NTIMER_START(time_total);
+
   /*  Example of BGV scheme  */
 
   // Plaintext prime modulus
@@ -185,6 +187,12 @@ int main(int argc, char* argv[])
   // Should be [2] [2] [2] ... [2] [2]
   std::cout << "Decrypted Result: " << new_plaintext_result << std::endl;
 
+  HELIB_NTIMER_STOP(time_total);
+
+  std::cout << "\n\n";
+  helib::printNamedTimer(std::cout, "time_total");
+  std::cout << "\n";
+  print_configuration();
   print_timers();
 
   return 0;

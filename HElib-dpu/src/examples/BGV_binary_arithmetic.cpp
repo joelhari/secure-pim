@@ -24,6 +24,8 @@
 
 int main(int argc, char* argv[])
 {
+  HELIB_NTIMER_START(time_total);
+
   /*  Example of binary arithmetic using the BGV scheme  */
 
   // First set up parameters.
@@ -236,6 +238,12 @@ int main(int argc, char* argv[])
   helib::decryptBinaryNums(decrypted_result, result_wrapper, secret_key, ea);
   std::cout << "popcnt(a) = " << decrypted_result.back() << std::endl;
 
+  HELIB_NTIMER_STOP(time_total);
+
+  std::cout << "\n\n";
+  helib::printNamedTimer(std::cout, "time_total");
+  std::cout << "\n";
+  print_configuration();
   print_timers();
 
   return 0;

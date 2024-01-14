@@ -126,6 +126,9 @@ clean:
 clean-helib:
 	rm -f $(HELIB_SRC_DIR)/*.o
 
+clean-dpu:
+	$(MAKE) -C src/dpu clean
+
 clean-build:
 	rm -f -r $(TARGET_DIR)
 
