@@ -8,10 +8,9 @@
 - g++ >= 11.3.0
 - m4 >= 1.4.18
 - pkg-config >= 0.29.0
-- patchelf >= 0.14.3
 
 ```
-sudo apt install make g++ m4 pkg-config patchelf
+sudo apt install make g++ m4 pkg-config
 ```
 
 ### GMP
