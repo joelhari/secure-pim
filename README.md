@@ -19,7 +19,7 @@ sudo apt install make g++ m4 pkg-config
 wget https://gmplib.org/download/gmp/gmp-6.3.0.tar.xz 
 tar -xvf gmp-6.3.0.tar.xz
 cd gmp-6.3.0
-./configure 
+./configure --prefix=$HOME/libs
 make 
 sudo make install
 sudo ldconfig
@@ -32,7 +32,7 @@ sudo ldconfig
 wget https://libntl.org/ntl-11.5.1.tar.gz
 tar -xvf ntl-11.5.1.tar.gz
 cd ntl-11.5.1/src
-./configure NTL_GMP_LIP=on SHARED=on  NTL_THREADS=on NTL_THREAD_BOOST=on
+./configure NTL_GMP_LIP=on SHARED=on  NTL_THREADS=on NTL_THREAD_BOOST=on PREFIX=$HOME/libs GMP_PREFIX=$HOME/libs
 make
 sudo make install
 ```
