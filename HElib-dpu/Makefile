@@ -47,7 +47,7 @@ LIBS_DPU := `dpu-pkg-config --cflags --libs dpu` -g -DNR_TASKLETS=$(NR_TASKLETS)
 
 CFLAGS = -pthread $(COPT) $(INC_HELIB) $(INCLUE) -DHELIB_THREADS -DHELIB_BOOT_THREADS -fmax-errors=1 -Werror=return-type -std=c++17
 
-LDFLAGS = -L$HOME/libs/lib -lgmp -lntl -lm -lpthread
+LDFLAGS = -L$(HOME)/libs/lib -lgmp -lntl -lm -lpthread
 
 # COMMON_FLAGS := -Wall -Wextra -Werror -g -I${COMMON_INCLUDES}
 # HOST_FLAGS := ${COMMON_FLAGS} -std=c11 -O3 `dpu-pkg-config --cflags --libs dpu` -DNR_TASKLETS=${NR_TASKLETS} -DNR_DPUS=${NR_DPUS}

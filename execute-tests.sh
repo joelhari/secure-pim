@@ -26,6 +26,7 @@ echo -e ${txtcyn}Running Tests ...${txtwht}
 ./build/BGV_binary_arithmetic > ../results/res-binary-0-0-$1.txt
 ./build/BGV_packed_arithmetic > ../results/res-packed-0-0-$1.txt
 ./build/BGV_country_db_lookup > ../results/res-country-0-0-$1.txt
+./build/multiplications > ../results/res-multiplications-0-0-$1.txt
 
 # -- using non-SIMD methods
 echo -e ${txtcyn}Cleaning ...${txtwht}
@@ -39,6 +40,7 @@ echo -e ${txtcyn}Running Tests ...${txtwht}
 ./build/BGV_binary_arithmetic > ../results/res-binary-0-1-$1.txt
 ./build/BGV_packed_arithmetic > ../results/res-packed-0-1-$1.txt
 ./build/BGV_country_db_lookup > ../results/res-country-0-1-$1.txt
+./build/multiplications > ../results/res-multiplications-0-1-$1.txt
 
 
 # Using DPU ---------------------------------------------------------------
@@ -59,6 +61,7 @@ echo -e ${txtcyn}Running Tests ...${txtwht}
 ./build/BGV_binary_arithmetic > ../results/res-binary-1-1-$1.txt
 ./build/BGV_packed_arithmetic > ../results/res-packed-1-1-$1.txt
 ./build/BGV_country_db_lookup > ../results/res-country-1-1-$1.txt
+./build/multiplications > ../results/res-multiplications-1-1-$1.txt
 
 # ---- using 2 tasklets
 echo -e ${txtcyn}Building DPU programs using 2 DPU ...${txtwht}
@@ -70,6 +73,7 @@ echo -e ${txtcyn}Running Tests ...${txtwht}
 ./build/BGV_binary_arithmetic > ../results/res-binary-1-2-$1.txt
 ./build/BGV_packed_arithmetic > ../results/res-packed-1-2-$1.txt
 ./build/BGV_country_db_lookup > ../results/res-country-1-2-$1.txt
+./build/multiplications > ../results/res-multiplications-1-2-$1.txt
 
 # ---- using 4 tasklets
 echo -e ${txtcyn}Building DPU programs using 4 DPU ...${txtwht}
@@ -81,6 +85,7 @@ echo -e ${txtcyn}Running Tests ...${txtwht}
 ./build/BGV_binary_arithmetic > ../results/res-binary-1-4-$1.txt
 ./build/BGV_packed_arithmetic > ../results/res-packed-1-4-$1.txt
 ./build/BGV_country_db_lookup > ../results/res-country-1-4-$1.txt
+./build/multiplications > ../results/res-multiplications-1-4-$1.txt
 
 # ---- using 8 tasklets
 echo -e ${txtcyn}Building DPU programs using 8 DPU ...${txtwht}
@@ -92,6 +97,7 @@ echo -e ${txtcyn}Running Tests ...${txtwht}
 ./build/BGV_binary_arithmetic > ../results/res-binary-1-8-$1.txt
 ./build/BGV_packed_arithmetic > ../results/res-packed-1-8-$1.txt
 ./build/BGV_country_db_lookup > ../results/res-country-1-8-$1.txt
+./build/multiplications > ../results/res-multiplications-1-8-$1.txt
 
 
 # -- using single-tasklet implementations
@@ -111,6 +117,7 @@ echo -e ${txtcyn}Running Tests ...${txtwht}
 ./build/BGV_binary_arithmetic > ../results/res-binary-1-0-$1.txt
 ./build/BGV_packed_arithmetic > ../results/res-packed-1-0-$1.txt
 ./build/BGV_country_db_lookup > ../results/res-country-1-0-$1.txt
+./build/multiplications > ../results/res-multiplications-1-0-$1.txt
 
 # all done
 echo -e ${txtcyn}Successfully executed all test${txtwht}

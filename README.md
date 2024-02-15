@@ -24,7 +24,7 @@ make
 sudo make install
 sudo ldconfig
 ```
-- This will build and install `gmp` in `/usr/local/lib` by default.
+- This will build and install `gmp` in `$HOME/libs/lib` by default.
 
 ### NTL
 - Download, decompress, build, and install `ntl`. It will also be used as a shared library by HElib.
@@ -36,9 +36,11 @@ cd ntl-11.5.1/src
 make
 sudo make install
 ```
-- This will build and install `ntl` in `/usr/local/lib` by default.
+- This will build and install `ntl` in `$HOME/libs/lib` by default.
 
 ### UPMEM DPU toolchain
+
+#### Ubuntu 22
 - Download, decompress, and install the UPMEM DPU toolchain.
 ```
 wget http://sdk-releases.upmem.com/2023.2.0/ubuntu_22.04/upmem-2023.2.0-Linux-x86_64.tar.gz
@@ -50,10 +52,22 @@ tar -xvf upmem-2023.2.0-Linux-x86_64.tar.gz -C $HOME/upmem-sdk
 source $HOME/upmem-sdk/upmem-2023.2.0-Linux-x86_64/upmem_env.sh
 ```
 
+#### Debian 10
+- Download, decompress, and install the UPMEM DPU toolchain.
+```
+wget http://sdk-releases.upmem.com/2023.2.0/debian_10/upmem-2023.2.0-Linux-x86_64.tar.gz
+mkdir $HOME/upmem-sdk
+tar -xvf upmem-2023.2.0-Linux-x86_64.tar.gz -C $HOME/upmem-sdk
+```
+- Source the environment.
+```
+source $HOME/upmem-sdk/upmem-2023.2.0-Linux-x86_64/upmem_env.sh
+```
+
 ### Library paths
 - Make sure the library paths are set.
 ```
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/libs/lib
 ```
 
 ## Running the Tests
