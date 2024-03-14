@@ -715,13 +715,13 @@ fwd_butterfly_loop(
    LOG_FUNCTION();
 
    HELIB_NTIMER_START(time_fwd_butterfly_loop);
-#ifdef USE_DPU
-#ifdef USE_MULTI_TASKLETS
-   dpu_fwd_butterfly_loop_2(size, xp0, xp1, wtab);
-#else
-   dpu_fwd_butterfly_loop(size, xp0, xp1, wtab);
-#endif
-#else
+// #ifdef USE_DPU
+// #ifdef USE_MULTI_TASKLETS
+//    dpu_fwd_butterfly_loop_2(size, xp0, xp1, wtab);
+// #else
+//    dpu_fwd_butterfly_loop(size, xp0, xp1, wtab);
+// #endif
+// #else
    fwd_butterfly0(xp0[0+0], xp1[0+0]);
    fwd_butterfly(xp0[0+1], xp1[0+1], wtab[0+1]);
    fwd_butterfly(xp0[0+2], xp1[0+2], wtab[0+2]);
@@ -732,7 +732,7 @@ fwd_butterfly_loop(
      fwd_butterfly(xp0[j+2], xp1[j+2], wtab[j+2]);
      fwd_butterfly(xp0[j+3], xp1[j+3], wtab[j+3]);
    }
-#endif
+// #endif
    HELIB_NTIMER_STOP(time_fwd_butterfly_loop);
 }
 
@@ -755,13 +755,13 @@ inv_butterfly_loop(
    LOG_FUNCTION();
 
    HELIB_NTIMER_START(time_inv_butterfly_loop);
-#ifdef USE_DPU
-#ifdef USE_MULTI_TASKLETS
-   dpu_inv_butterfly_loop_2(size, xp0, xp1, wtab);
-#else
-   dpu_inv_butterfly_loop(size, xp0, xp1, wtab);
-#endif
-#else
+// #ifdef USE_DPU
+// #ifdef USE_MULTI_TASKLETS
+//    dpu_inv_butterfly_loop_2(size, xp0, xp1, wtab);
+// #else
+//    dpu_inv_butterfly_loop(size, xp0, xp1, wtab);
+// #endif
+// #else
    inv_butterfly0(xp0[0+0], xp1[0+0]);
    inv_butterfly(xp0[0+1], xp1[0+1], wtab[0+1]);
    inv_butterfly(xp0[0+2], xp1[0+2], wtab[0+2]);
@@ -772,7 +772,7 @@ inv_butterfly_loop(
      inv_butterfly(xp0[j+2], xp1[j+2], wtab[j+2]);
      inv_butterfly(xp0[j+3], xp1[j+3], wtab[j+3]);
    }
-#endif
+// #endif
    HELIB_NTIMER_STOP(time_inv_butterfly_loop);
 }
 
@@ -853,13 +853,13 @@ new_fft_layer(cmplx_t* xp, long blocks, long size,
   LOG_FUNCTION();
 
   HELIB_NTIMER_START(time_new_fft_layer);
-#ifdef USE_DPU
-#ifdef USE_MULTI_TASKLETS
-  dpu_new_fft_layer_2(xp, blocks, size, wtab);
-#else
-  dpu_new_fft_layer(xp, blocks, size, wtab);
-#endif
-#else
+// #ifdef USE_DPU
+// #ifdef USE_MULTI_TASKLETS
+//   dpu_new_fft_layer_2(xp, blocks, size, wtab);
+// #else
+//   dpu_new_fft_layer(xp, blocks, size, wtab);
+// #endif
+// #else
   size /= 2;
 
   do
@@ -872,7 +872,7 @@ new_fft_layer(cmplx_t* xp, long blocks, long size,
       xp += 2 * size;
     }
   while (--blocks != 0);
-#endif
+// #endif
   HELIB_NTIMER_STOP(time_new_fft_layer);
 }
 
@@ -891,13 +891,13 @@ new_fft_last_two_layers(cmplx_t* xp, long blocks, const cmplx_t* wtab)
   LOG_FUNCTION();
 
   HELIB_NTIMER_START(time_new_fft_last_two_layers);
-#ifdef USE_DPU
-#ifdef USE_MULTI_TASKLETS
-  dpu_new_fft_last_two_layers_2(xp, blocks);
-#else
-  dpu_new_fft_last_two_layers(xp, blocks);
-#endif
-#else
+// #ifdef USE_DPU
+// #ifdef USE_MULTI_TASKLETS
+//   dpu_new_fft_last_two_layers_2(xp, blocks);
+// #else
+//   dpu_new_fft_last_two_layers(xp, blocks);
+// #endif
+// #else
   // 4th root of unity
   cmplx_t w = wtab[1];
 
@@ -926,7 +926,7 @@ new_fft_last_two_layers(cmplx_t* xp, long blocks, const cmplx_t* wtab)
       xp += 4;
     }
   while (--blocks != 0);
-#endif
+// #endif
   HELIB_NTIMER_STOP(time_new_fft_last_two_layers);
 }
 
@@ -1066,13 +1066,13 @@ new_ifft_layer(cmplx_t* xp, long blocks, long size,
   LOG_FUNCTION();
 
   HELIB_NTIMER_START(time_new_ifft_layer);
-#ifdef USE_DPU
-#ifdef USE_MULTI_TASKLETS
-  dpu_new_ifft_layer_2(xp, blocks, size, wtab);
-#else
-  dpu_new_ifft_layer(xp, blocks, size, wtab);
-#endif
-#else
+// #ifdef USE_DPU
+// #ifdef USE_MULTI_TASKLETS
+//   dpu_new_ifft_layer_2(xp, blocks, size, wtab);
+// #else
+//   dpu_new_ifft_layer(xp, blocks, size, wtab);
+// #endif
+// #else
   size /= 2;
 
   do
@@ -1087,7 +1087,7 @@ new_ifft_layer(cmplx_t* xp, long blocks, long size,
       xp += 2 * size;
     }
   while (--blocks != 0);
-#endif
+// #endif
   HELIB_NTIMER_STOP(time_new_ifft_layer);
 }
 
@@ -1104,13 +1104,13 @@ new_ifft_first_two_layers(cmplx_t* xp, long blocks, const cmplx_t* wtab)
   LOG_FUNCTION();
 
   HELIB_NTIMER_START(time_new_ifft_first_two_layers);
-#ifdef USE_DPU
-#ifdef USE_MULTI_TASKLETS
-  dpu_new_ifft_first_two_layers_2(xp, blocks);
-#else
-  dpu_new_ifft_first_two_layers(xp, blocks);
-#endif
-#else
+// #ifdef USE_DPU
+// #ifdef USE_MULTI_TASKLETS
+//   dpu_new_ifft_first_two_layers_2(xp, blocks);
+// #else
+//   dpu_new_ifft_first_two_layers(xp, blocks);
+// #endif
+// #else
   // 4th root of unity
   cmplx_t w = wtab[1];
 
@@ -1138,7 +1138,7 @@ new_ifft_first_two_layers(cmplx_t* xp, long blocks, const cmplx_t* wtab)
       xp += 4;
     }
   while (--blocks != 0);
-#endif
+// #endif
   HELIB_NTIMER_STOP(time_new_ifft_first_two_layers);
 }
 
