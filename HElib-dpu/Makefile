@@ -121,6 +121,7 @@ clean-all: clean clean-helib clean-build
 clean:
 	rm -f $(HELIB_SRC_DIR)/Ctxt.o
 	rm -f $(HELIB_SRC_DIR)/PGFFT.o
+	rm -f $(HELIB_SRC_DIR)/CModulus.o
 	rm -f $(EXAMPLES_SRC_DIR)/*.o $(TESTS_SRC_DIR)/*.o $(SRC_DIR)/*.o
 
 clean-helib:

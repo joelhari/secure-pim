@@ -13,10 +13,65 @@ int main(int argc, char *argv[])
   Context context =
       ContextBuilder<CKKS>()
           .m(16 * 1024)
+          // m is the "cyclotomic index". For CKKS, m must be a power of 2.  As
+          // m increases, you get more security and more slots, but the
+          // performance degrades and the size of a ciphertext increases. See
+          // table below for more information.
+
           .bits(119)
+          // bits specifies the number of bits in the "ciphertext modulus".  As
+          // bits increases, you get less security, but you can perform deeper
+          // homomorphic computations; in addition, the size of a ciphertext
+          // increases.  See table below for more information. Also see
+          // 02_depth.cpp for more information about how depth and bits are
+          // related.
+
           .precision(20)
+          // precision specifies the number of bits of precision when data is
+          // encoded, encrypted, or decrypted.  More precisely, each of these
+          // operations are designed to add an error term of at most
+          // 2^{-precision} to each slot.  As precision increases, the allowed
+          // depth of homomorphic computations decreases (but security and
+          // performance are not affected).  It is not recommended to use
+          // precision greater than about 40 or so.
+
           .c(2)
+          // c specifies the number of columns in key-switching matrices.  Yes,
+          // it sounds very technical, and it is.  However, all you have to know
+          // about this parameter is that as c increases, you get a little more
+          // security, but performance degrades and the memory requirement for
+          // the public key increases. c must be at least 2 and it is not
+          // recommended to set c higher than 8.  See table below for more
+          // information.
+          
           .build();
+
+  // The following table lists settings of m, bits, and c that yield (at least)
+  // 128-bit security.  It is highly recommended to only use settings from this
+  // table.
+  //
+  // m       bits  c
+  //  16384   119  2
+  //  32768   358  6
+  //  32768   299  3
+  //  32768   239  2
+  //  65536   725  8
+  //  65536   717  6
+  //  65536   669  4
+  //  65536   613  3
+  //  65536   558  2
+  // 131072  1445  8
+  // 131072  1435  6
+  // 131072  1387  5
+  // 131072  1329  4
+  // 131072  1255  3
+  // 131072  1098  2
+  // 262144  2940  8
+  // 262144  2870  6
+  // 262144  2763  5
+  // 262144  2646  4
+  // 262144  2511  3
+  // 262144  2234  2
 
   // cout << "securityLevel=" << context.securityLevel() << "\n";
 

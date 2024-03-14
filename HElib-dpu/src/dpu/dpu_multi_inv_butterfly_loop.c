@@ -2,7 +2,7 @@
 #include <mram.h>
 #include <perfcounter.h>
 #include <defs.h>
-#include "dpu_complex.h"
+#include "dpu_complex_operations.h"
 #include "common.h"
 
 typedef dpu_complex complex;

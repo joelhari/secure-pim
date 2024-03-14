@@ -19,6 +19,13 @@
 #define DPU_DO_FWD_BUTTERFLY0  do_fwd_butterfly0
 #define DPU_DO_INV_BUTTERFLY0  do_inv_butterfly0
 
+#define DPU_A                  mram_as
+#define DPU_B                  mram_bs
+#define DPU_T                  mram_ts
+#define DPU_REV_Q              mram_ref_q
+#define DPU_Q                  dsl_q
+#define DPU_START              start
+
 #define DPU_PARTS              parts
 #define DPU_OTHER_PARTS        other_parts
 #define DPU_NEGATIVE           negative

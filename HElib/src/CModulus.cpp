@@ -45,6 +45,14 @@
 #include "intelExt.h"
 #endif
 
+
+/* ****************************************************************************** */
+/* DPU HOST PROGRAMS                                                              */
+
+#include "helib_c_modulus_dpu.hpp"
+
+/* ****************************************************************************** */
+
 namespace helib {
 
 // It is assumed that m,q,context, and root are already set. If root is set
@@ -281,10 +289,30 @@ static long* BRC_init(long k)
   return rev;
 }
 
+static void DPU_BasicBitReverseCopy(long* NTL_RESTRICT B,
+                                    const long* NTL_RESTRICT A,
+                                    long k)
+{
+  NTL::Vec<long>* brc_mem = get_brc_mem();
+
+  long* NTL_RESTRICT rev;
+
+  rev = brc_mem[k].elts();
+  if (!rev)
+    rev = BRC_init(k);
+
+  dpu_BasicBitReverseCopy(B, A, k, rev);
+}
+
 static void BasicBitReverseCopy(long* NTL_RESTRICT B,
                                 const long* NTL_RESTRICT A,
                                 long k)
 {
+  HELIB_NTIMER_START(time_basic_bit_reverse_copy);
+
+#ifdef USE_DPU
+  DPU_BasicBitReverseCopy(B, A, k);
+#else
   NTL::Vec<long>* brc_mem = get_brc_mem();
 
   long n = 1L << k;
@@ -296,10 +324,52 @@ static void BasicBitReverseCopy(long* NTL_RESTRICT B,
 
   for (long i = 0; i < n; i++)
     B[rev[i]] = A[i];
+#endif
+  HELIB_NTIMER_STOP(time_basic_bit_reverse_copy);
+}
+
+void Cmodulus::test_BasicBitReverseCopy(long* NTL_RESTRICT B, const long* NTL_RESTRICT A, long k)
+{
+  BasicBitReverseCopy(B, A, k);
+}
+
+void Cmodulus::test_DPU_BasicBitReverseCopy(long* NTL_RESTRICT B, const long* NTL_RESTRICT A, long k)
+{
+  DPU_BasicBitReverseCopy(B, A, k);
+}
+
+static void DPU_COBRA(long* NTL_RESTRICT B, const long* NTL_RESTRICT A, long k)
+{
+  NTL::Vec<long>* brc_mem = get_brc_mem();
+
+  using namespace NTL;
+  NTL_TLS_LOCAL(NTL::Vec<long>, BRC_temp);
+
+  long q = NTL_BRC_Q;
+  long k1 = k - 2 * q;
+  long* NTL_RESTRICT rev_k1;
+  long* NTL_RESTRICT rev_q;
+  long* NTL_RESTRICT T;
+  long a1, b1, c1;
+
+  rev_k1 = brc_mem[k1].elts();
+  if (!rev_k1)
+    rev_k1 = BRC_init(k1);
+
+  rev_q = brc_mem[q].elts();
+  if (!rev_q)
+    rev_q = BRC_init(q);
+
+  dpu_COBRA(B, A, k1, rev_k1, rev_q, q);
 }
 
 static void COBRA(long* NTL_RESTRICT B, const long* NTL_RESTRICT A, long k)
 {
+  HELIB_NTIMER_START(time_cobra);
+
+#ifdef USE_DPU
+  DPU_COBRA(B, A, k);
+#else
   NTL::Vec<long>* brc_mem = get_brc_mem();
 
   using namespace NTL;
@@ -340,6 +410,18 @@ static void COBRA(long* NTL_RESTRICT B, const long* NTL_RESTRICT A, long k)
         B[(c1 << (k1 + q)) + (b1 << q) + a1] = T[(a1 << q) + c];
     }
   }
+#endif
+  HELIB_NTIMER_STOP(time_cobra);
+}
+
+void Cmodulus::test_COBRA(long* NTL_RESTRICT B, const long* NTL_RESTRICT A, long k)
+{
+  COBRA(B, A, k);
+}
+
+void Cmodulus::test_DPU_COBRA(long* NTL_RESTRICT B, const long* NTL_RESTRICT A, long k)
+{
+  DPU_COBRA(B, A, k);
 }
 
 static void BitReverseCopy(long* NTL_RESTRICT B,

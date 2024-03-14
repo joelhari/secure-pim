@@ -9,6 +9,7 @@ typedef std::complex<double> cmplx_t;
 
 namespace test {
 
+#include "dpu_complex_operations.h"
 #include "complex_conversions.hpp"
 
 void test_convert_to_dpu_complex(void)

@@ -2,8 +2,12 @@
 #include <mram.h>
 #include <perfcounter.h>
 #include <defs.h>
-#include "dpu_complex.h"
+#include "dpu_complex_operations.h"
 #include "common.h"
+
+#ifndef NR_TASKLETS
+    #define NR_TASKLETS 1
+#endif
 
 typedef dpu_complex complex;
 

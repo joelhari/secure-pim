@@ -155,6 +155,11 @@ public:
   // DIRT: this use a couple of internal, undocumented
   // NTL interfaces
   static NTL::fftRep& getScratch_fftRep(long k);
+
+  static void test_BasicBitReverseCopy(long* NTL_RESTRICT B, const long* NTL_RESTRICT A, long k);
+  static void test_DPU_BasicBitReverseCopy(long* NTL_RESTRICT B, const long* NTL_RESTRICT A, long k);
+  static void test_COBRA(long* NTL_RESTRICT B, const long* NTL_RESTRICT A, long k);
+  static void test_DPU_COBRA(long* NTL_RESTRICT B, const long* NTL_RESTRICT A, long k);
 };
 
 } // namespace helib
