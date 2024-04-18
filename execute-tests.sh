@@ -54,7 +54,7 @@ echo -e ${txtcyn}Building HElib using DPUs ...${txtwht}
 make all -j8 NR_DPUS=$1 USE_DPU=1 USE_MULTI_TASKLETS=1 PGFFT_DISABLE_SIMD=1
 
 # ---- using 8 tasklets
-echo -e ${txtcyn}Building DPU programs using 8 DPU ...${txtwht}
+echo -e ${txtcyn}Building DPU programs using 8 tasklets ...${txtwht}
 make clean-dpu
 make dpu -j8 NR_TASKLETS=8
 
@@ -67,7 +67,7 @@ echo -e ${txtcyn}Running Tests ...${txtwht}
 ./build/additions > ../results/res-additions-1-8-$1.txt
 
 # ---- using 4 tasklets
-echo -e ${txtcyn}Building DPU programs using 4 DPU ...${txtwht}
+echo -e ${txtcyn}Building DPU programs using 4 tasklets ...${txtwht}
 make clean-dpu
 make dpu -j8 NR_TASKLETS=4
 
@@ -80,7 +80,7 @@ echo -e ${txtcyn}Running Tests ...${txtwht}
 ./build/additions > ../results/res-additions-1-4-$1.txt
 
 # ---- using 2 tasklets
-echo -e ${txtcyn}Building DPU programs using 2 DPU ...${txtwht}
+echo -e ${txtcyn}Building DPU programs using 2 tasklets ...${txtwht}
 make clean-dpu
 make dpu -j8 NR_TASKLETS=2
 
@@ -93,7 +93,7 @@ echo -e ${txtcyn}Running Tests ...${txtwht}
 ./build/additions > ../results/res-additions-1-2-$1.txt
 
 # ---- using 1 tasklet
-echo -e ${txtcyn}Building DPU programs using 1 DPU ...${txtwht}
+echo -e ${txtcyn}Building DPU programs using 1 tasklet ...${txtwht}
 make clean-dpu
 make dpu -j8 NR_TASKLETS=1
 
@@ -114,7 +114,7 @@ echo -e ${txtcyn}Running Tests ...${txtwht}
 # make all -j8 NR_DPUS=$1 USE_DPU=1 USE_MULTI_TASKLETS=0 PGFFT_DISABLE_SIMD=1
 
 # # ---- using 1 tasklet
-# echo -e ${txtcyn}Building DPU programs using 1 DPU ...${txtwht}
+# echo -e ${txtcyn}Building DPU programs using 1 tasklet ...${txtwht}
 # make clean-dpu
 # make dpu -j8 NR_TASKLETS=1
 
