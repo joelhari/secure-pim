@@ -53,6 +53,17 @@ int main(int argc, char* argv[])
   // Orders of the previous generators.
   std::vector<long> ords = {6, 4, 6};
 
+  // m = 35113;
+  // p = 2;
+  // r = 1;
+  // c = 2;
+  // bits = 580;
+  // // t = 64;
+  // // c_m = 100;
+  // mvec = std::vector<long>{37, 949};
+  // gens = std::vector<long>{16134, 8548};
+  // ords = std::vector<long>{36, 24};
+
   std::cout << "\n*********************************************************";
   std::cout << "\n*            Basic Binary Arithmetic Example            *";
   std::cout << "\n*            ===============================            *";

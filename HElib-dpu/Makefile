@@ -8,8 +8,9 @@
 NR_TASKLETS ?= 16
 NR_DPUS ?= 1
 USE_DPU ?= 0
-USE_MULTI_TASKLETS ?= 0
+USE_MULTI_TASKLETS ?= 1
 PGFFT_DISABLE_SIMD ?= 1
+PRINT_SIZE ?= 0
 
 USE_DPU_FLAG := 
 ifeq ($(USE_DPU), 1)
@@ -26,6 +27,11 @@ ifeq ($(PGFFT_DISABLE_SIMD), 1)
 	PGFFT_DISABLE_SIMD_FLAG := -DPGFFT_DISABLE_SIMD
 endif
 
+PRINT_SIZE_FLAG := 
+ifeq ($(PRINT_SIZE), 1)
+	PRINT_SIZE_FLAG := -DPRINT_SIZE
+endif
+
 CC = g++
 LD = g++
 AR = ar
@@ -36,7 +42,7 @@ COPT = -g -O2 -march=native
 INC_HELIB = -I../HElib/include/
 INCLUE = -Iinclude -I$(HOME)/libs/include
 
-LIBS_DPU := `dpu-pkg-config --cflags --libs dpu` -g -DNR_TASKLETS=$(NR_TASKLETS) -DNR_DPUS=$(NR_DPUS) $(USE_DPU_FLAG) $(USE_MULTI_TASKLETS_FLAG) $(PGFFT_DISABLE_SIMD_FLAG)
+LIBS_DPU := `dpu-pkg-config --cflags --libs dpu` -g -DNR_TASKLETS=$(NR_TASKLETS) -DNR_DPUS=$(NR_DPUS) $(USE_DPU_FLAG) $(USE_MULTI_TASKLETS_FLAG) $(PGFFT_DISABLE_SIMD_FLAG) $(PRINT_SIZE_FLAG)
 
 # INC and LIB changed to when GMP and/or NTL not in default locations
 # Put these definitions in the file local-defs, which will be included
@@ -121,7 +127,10 @@ clean-all: clean clean-helib clean-build
 clean:
 	rm -f $(HELIB_SRC_DIR)/Ctxt.o
 	rm -f $(HELIB_SRC_DIR)/PGFFT.o
+	rm -f $(HELIB_SRC_DIR)/DoubleCRT.o
 	rm -f $(HELIB_SRC_DIR)/CModulus.o
+	rm -f $(HELIB_SRC_DIR)/bluestein.o
+	rm -f $(HELIB_SRC_DIR)/binaryArith.o
 	rm -f $(EXAMPLES_SRC_DIR)/*.o $(TESTS_SRC_DIR)/*.o $(SRC_DIR)/*.o
 
 clean-helib:

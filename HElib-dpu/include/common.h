@@ -30,6 +30,10 @@
 #define DPU_OTHER_PARTS        other_parts
 #define DPU_NEGATIVE           negative
 
+#define DPU_ROW_THIS           mram_row_this
+#define DPU_ROW_OTHER          mram_row_other
+#define DPU_PI                 pi
+
 /* Make large numbers easier to read (and accurate) */
 /* copied from https://github.com/UBC-ECE-Sasha/PIM-common/tree/master/common/include/common.h */
 #define KILOBYTE(_x) (_x << 10)

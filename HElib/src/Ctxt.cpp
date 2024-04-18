@@ -33,6 +33,15 @@
 #include <helib/sample.h>
 #include "internal_symbols.h"
 
+
+/* ****************************************************************************** */
+/* DPU HOST PROGRAMS                                                              */
+
+#include "helib_ctxt_dpu.hpp"
+
+/* ****************************************************************************** */
+
+
 namespace helib {
 
 extern int fhe_watcher;
@@ -1405,6 +1414,8 @@ static NTL::xdouble NoiseNorm(NTL::xdouble noise1,
 // Add/subtract another ciphertext (depending on the negative flag)
 void Ctxt::addCtxt(const Ctxt& other, bool negative)
 {
+  LOG_FUNCTION();
+
   HELIB_TIMER_START;
 
   // Sanity check: same context and public key
@@ -1553,6 +1564,42 @@ void Ctxt::addCtxt(const Ctxt& other, bool negative)
   }
   ptxtMag += other_pt->ptxtMag;
   noiseBound += other_pt->noiseBound;
+}
+
+CtxtPart& Ctxt::test_add_part_0(const Ctxt& other)
+{
+  const Ctxt* other_pt = &other;
+  if (parts.size() <= 0 || other_pt->parts.size() <= 0) {
+    throw RuntimeError("Parts are not valid");
+  }
+  const CtxtPart& part = other_pt->parts[0];
+  long j = getPartIndexByHandle(part.skHandle);
+
+  if (j >= 0) {
+    parts[j] += part;
+  } else {
+    std::cout << "Ctxt::test_add_part_0 - No matching part found" << std::endl;
+  }
+
+  return parts[j];
+}
+
+CtxtPart& Ctxt::test_add_part_0_dpu(const Ctxt& other)
+{
+  const Ctxt* other_pt = &other;
+  if (parts.size() <= 0 || other_pt->parts.size() <= 0) {
+    throw RuntimeError("Parts are not valid");
+  }
+  const CtxtPart& part = other_pt->parts[0];
+  long j = getPartIndexByHandle(part.skHandle);
+
+  if (j >= 0) {
+    parts[j].test_dpu_Op_AddFun(part);
+  } else {
+    std::cout << "Ctxt::test_add_part_0 - No matching part found" << std::endl;
+  }
+
+  return parts[j];
 }
 
 // long fhe_disable_intFactor = 0;

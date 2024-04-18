@@ -138,6 +138,10 @@ void BluesteinFFT(NTL::zz_pX& x,
                   const NTL::Vec<NTL::mulmod_precon_t>& powers_aux,
                   const NTL::fftRep& Rb)
 {
+#ifdef PRINT_SIZE
+  std::cout << "bluestein,BluesteinFFT,long," << n << std::endl;
+#endif
+
   HELIB_TIMER_START;
 
   if (IsZero(x))

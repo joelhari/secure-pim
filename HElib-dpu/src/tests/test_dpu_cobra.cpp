@@ -4,8 +4,10 @@
 #include "test_utils.h"
 #include "helib_c_modulus_dpu.hpp"
 
-#define TEST_SIZE 8192 // needs to be a multiple of 8
-#define TEST_RUNS 100
+#define NTL_BRC_Q (5) // needs to be the same as in CModulus.cpp
+#define TEST_K 16
+#define TEST_SIZE 1024 * (1L << (TEST_K - (2 * NTL_BRC_Q)))
+#define TEST_RUNS 50
 #define RANDOM_SEED 17
 
 void init_random(long *A, size_t size)
@@ -21,8 +23,8 @@ void test_dpu_cobra()
     long A[TEST_SIZE];
     long B[TEST_SIZE];
     long dpu_B[TEST_SIZE];
-    long k = 13;
-    long dpu_k = 13;
+    long k = TEST_K;
+    long dpu_k = TEST_K;
 
     // init array A with random numbers
     init_random(A, TEST_SIZE);

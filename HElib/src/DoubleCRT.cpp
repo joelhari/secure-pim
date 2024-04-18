@@ -47,6 +47,14 @@
 #include <helib/fhe_stats.h>
 #include <helib/log.h>
 
+
+/* ****************************************************************************** */
+/* DPU HOST PROGRAMS                                                              */
+
+#include "helib_double_crt_dpu.hpp"
+
+/* ****************************************************************************** */
+
 namespace helib {
 
 // A threaded implementation of DoubleCRT operations
@@ -211,6 +219,57 @@ struct MulFun
   long apply(long a, long b, long n) const { return NTL::MulMod(a, b, n); }
 };
 #endif
+
+/**
+ * This method is a copy from  `DoubleCRT::Op(const DoubleCRT& other, Fun fun, bool matchIndexSets)`,
+ * except it does not get the `Fun fun` argument but applies the AddFun on the DPUs instead.
+ */
+DoubleCRT& DoubleCRT::dpu_Op_AddFun(const DoubleCRT& other, bool matchIndexSets)
+{
+if (isDryRun())
+    return *this;
+
+  if (&context != &other.context)
+    throw RuntimeError("DoubleCRT::Op: incompatible objects");
+
+  // VJS-FIXME: experiment to ignore matchIndexSets
+  // Match the index sets, if needed
+  if (matchIndexSets && !(map.getIndexSet() >= other.map.getIndexSet())) {
+#if 0
+    HELIB_NTIMER_START(addPrimes_1);
+    Warning("addPrimes called (1) in DoubleCRT::op");
+    addPrimes(other.map.getIndexSet() / map.getIndexSet()); // This is expensive
+#else
+    throw RuntimeError("DoubleCRT::Op: matchIndexSets not honored");
+#endif
+  }
+
+  // If you need to mod-up the other, do it on a temporary scratch copy
+  DoubleCRT tmp(context, IndexSet());
+  const IndexMap<NTL::vec_long>* other_map = &other.map;
+
+  // VJS-FIXME: experiment to insist that
+  // map.getIndexSet() <= other.map.getIndexSet()
+  if (!(map.getIndexSet() <= other.map.getIndexSet())) { // Even more expensive
+#if 0
+    HELIB_NTIMER_START(addPrimes_2);
+    tmp = other;
+    Warning("addPrimes called (2) in DoubleCRT::op");
+    tmp.addPrimes(map.getIndexSet() / other.map.getIndexSet());
+    other_map = &tmp.map;
+#else
+    throw RuntimeError(
+        "DoubleCRT::Op: !(map.getIndexSet() <= other.map.getIndexSet())");
+#endif
+  }
+
+  const IndexSet& s = map.getIndexSet();
+  long phim = context.getPhiM();
+
+  dpu_add_ctxt(&map, other_map, &context, s, phim);
+
+  return *this;
+}
 
 // Generic operation, Fnc is AddMod, SubMod, or MulMod (from NTL's ZZ module)
 template <typename Fun>
@@ -398,7 +457,16 @@ DoubleCRT& DoubleCRT::Op(const NTL::ZZX& poly, Fun fun)
 // overloaded ops
 DoubleCRT& DoubleCRT::operator+=(const DoubleCRT& other)
 {
+#ifdef USE_DPU
+  return dpu_Op_AddFun(other);
+#else
   return Op(other, AddFun());
+#endif
+}
+
+DoubleCRT& DoubleCRT::test_dpu_Op_AddFun(const DoubleCRT& other)
+{
+  return dpu_Op_AddFun(other);
 }
 
 DoubleCRT& DoubleCRT::operator+=(const NTL::ZZX& poly)

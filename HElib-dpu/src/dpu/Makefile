@@ -15,7 +15,7 @@ all: $(DPU_TARGETS) single-tasklet
 
 %: %.c
 	$(TARGET_DIR_GUARD)
-	@dpu-upmem-dpurte-clang $(INCLUDE) -DSTACK_SIZE_DEFAULT=6144 -DNR_TASKLETS=$(NR_TASKLETS) -o $(TARGET_DIR)/$@ $<
+	@dpu-upmem-dpurte-clang $(INCLUDE) -DSTACK_SIZE_DEFAULT=4000 -DNR_TASKLETS=$(NR_TASKLETS) -o $(TARGET_DIR)/$@ $<
 	@echo "CXX <= $<"
 
 single-tasklet:

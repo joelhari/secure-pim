@@ -2,23 +2,31 @@
 #include <helib/helib.h>
 
 #include "print_timers.hpp"
+#include "context_getter.h"
 
 using namespace std;
 using namespace helib;
 
 int main(int argc, char *argv[])
 {
+  uint32_t m, bits, c;
+  GET_CKKS_CONTEXT(0);
+
+#ifdef PRINT_SIZE
+  std::cout << "Module,Method,DataType,Size" << std::endl;
+#endif
+
   HELIB_NTIMER_START(time_total);
 
   Context context =
       ContextBuilder<CKKS>()
-          .m(16 * 1024)
+          .m(m)
           // m is the "cyclotomic index". For CKKS, m must be a power of 2.  As
           // m increases, you get more security and more slots, but the
           // performance degrades and the size of a ciphertext increases. See
           // table below for more information.
 
-          .bits(119)
+          .bits(bits)
           // bits specifies the number of bits in the "ciphertext modulus".  As
           // bits increases, you get less security, but you can perform deeper
           // homomorphic computations; in addition, the size of a ciphertext
@@ -35,7 +43,7 @@ int main(int argc, char *argv[])
           // performance are not affected).  It is not recommended to use
           // precision greater than about 40 or so.
 
-          .c(2)
+          .c(c)
           // c specifies the number of columns in key-switching matrices.  Yes,
           // it sounds very technical, and it is.  However, all you have to know
           // about this parameter is that as c increases, you get a little more
@@ -125,14 +133,17 @@ int main(int argc, char *argv[])
   PtxtArray p3 = p0;
   p3 *= p1;
 
+#ifndef PRINT_SIZE
   double distance_add = Distance(p2, pp2);
   cout << "distance addition = " << distance_add << "\n";
 
   double distance_mul = Distance(p3, pp3);
   cout << "distance multiplication = " << distance_mul << "\n";
+#endif
 
   HELIB_NTIMER_STOP(time_total);
 
+#ifndef PRINT_SIZE
   std::cout << "\n\n";
   helib::printNamedTimer(std::cout, "time_addition");
   helib::printNamedTimer(std::cout, "time_multiplication");
@@ -140,6 +151,7 @@ int main(int argc, char *argv[])
   std::cout << "\n";
   print_configuration();
   print_timers();
+#endif
 
   return 0;
 }

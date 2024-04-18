@@ -712,6 +712,10 @@ fwd_butterfly_loop(
    cmplx_t * RESTRICT xp1,
    const cmplx_t * RESTRICT wtab)
 {
+#ifdef PRINT_SIZE
+  std::cout << "PGFFTT,fwd_butterfly_loop,array::complex<double>," << size << std::endl;
+#endif
+
    LOG_FUNCTION();
 
    HELIB_NTIMER_START(time_fwd_butterfly_loop);
@@ -752,6 +756,10 @@ inv_butterfly_loop(
    cmplx_t * RESTRICT xp1,
    const cmplx_t * RESTRICT wtab)
 {
+#ifdef PRINT_SIZE
+  std::cout << "PGFFTT,inv_butterfly_loop,array::complex<double>," << size << std::endl;
+#endif
+
    LOG_FUNCTION();
 
    HELIB_NTIMER_START(time_inv_butterfly_loop);
@@ -850,6 +858,10 @@ static void
 new_fft_layer(cmplx_t* xp, long blocks, long size,
               const cmplx_t* RESTRICT wtab)
 {
+#ifdef PRINT_SIZE
+  std::cout << "PGFFTT,new_fft_layer,array::complex<double>," << blocks * size << std::endl;
+#endif
+
   LOG_FUNCTION();
 
   HELIB_NTIMER_START(time_new_fft_layer);
@@ -888,6 +900,10 @@ void PGFFT::test_new_fft_layer(
 static void
 new_fft_last_two_layers(cmplx_t* xp, long blocks, const cmplx_t* wtab)
 {
+#ifdef PRINT_SIZE
+  std::cout << "PGFFTT,new_fft_last_two_layers,array::complex<double>," << blocks * 4 << std::endl;
+#endif
+
   LOG_FUNCTION();
 
   HELIB_NTIMER_START(time_new_fft_last_two_layers);
@@ -1063,6 +1079,10 @@ static void
 new_ifft_layer(cmplx_t* xp, long blocks, long size,
                const cmplx_t* RESTRICT wtab)
 {
+#ifdef PRINT_SIZE
+  std::cout << "PGFFTT,new_ifft_layer,array::complex<double>," << blocks * size << std::endl;
+#endif
+
   LOG_FUNCTION();
 
   HELIB_NTIMER_START(time_new_ifft_layer);
@@ -1101,6 +1121,10 @@ void PGFFT::test_new_ifft_layer(
 static void
 new_ifft_first_two_layers(cmplx_t* xp, long blocks, const cmplx_t* wtab)
 {
+#ifdef PRINT_SIZE
+  std::cout << "PGFFTT,new_ifft_first_two_layers,array::complex<double>," << blocks * 4 << std::endl;
+#endif
+
   LOG_FUNCTION();
 
   HELIB_NTIMER_START(time_new_ifft_first_two_layers);

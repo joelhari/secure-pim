@@ -318,6 +318,10 @@ static void BasicBitReverseCopy(long* NTL_RESTRICT B,
   long n = 1L << k;
   long* NTL_RESTRICT rev;
 
+#ifdef PRINT_SIZE
+  std::cout << "CModulus,BasicBitReverseCopy,array::long," << n << std::endl;
+#endif
+
   rev = brc_mem[k].elts();
   if (!rev)
     rev = BRC_init(k);
@@ -360,7 +364,7 @@ static void DPU_COBRA(long* NTL_RESTRICT B, const long* NTL_RESTRICT A, long k)
   if (!rev_q)
     rev_q = BRC_init(q);
 
-  dpu_COBRA(B, A, k1, rev_k1, rev_q, q);
+  dpu_COBRA_1(B, A, k1, rev_k1, rev_q, q);
 }
 
 static void COBRA(long* NTL_RESTRICT B, const long* NTL_RESTRICT A, long k)
@@ -396,12 +400,22 @@ static void COBRA(long* NTL_RESTRICT B, const long* NTL_RESTRICT A, long k)
     T = BRC_temp.elts();
   }
 
+#ifdef PRINT_SIZE
+  long size = 0;
+#endif
+
   for (long b = 0; b < (1L << k1); b++) {
     b1 = rev_k1[b];
     for (long a = 0; a < (1L << q); a++) {
       a1 = rev_q[a];
-      for (long c = 0; c < (1L << q); c++)
+      for (long c = 0; c < (1L << q); c++) {
         T[(a1 << q) + c] = A[(a << (k1 + q)) + (b << q) + c];
+#ifdef PRINT_SIZE
+        long i = (a << (k1 + q)) + (b << q) + c;
+        if (i > size)
+          size = i;
+#endif
+      }
     }
 
     for (long c = 0; c < (1L << q); c++) {
@@ -410,6 +424,11 @@ static void COBRA(long* NTL_RESTRICT B, const long* NTL_RESTRICT A, long k)
         B[(c1 << (k1 + q)) + (b1 << q) + a1] = T[(a1 << q) + c];
     }
   }
+
+#ifdef PRINT_SIZE
+  std::cout << "CModulus,COBRA,array::long," << size << std::endl;
+#endif
+
 #endif
   HELIB_NTIMER_STOP(time_cobra);
 }

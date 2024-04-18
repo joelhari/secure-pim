@@ -1,6 +1,6 @@
 
-#ifndef _H_COMPLEX_CONVERSIONS
-#define _H_COMPLEX_CONVERSIONS
+#ifndef _HPP_COMPLEX_CONVERSIONS
+#define _HPP_COMPLEX_CONVERSIONS
 
 #include <complex>
 #include "dpu_complex.h"
