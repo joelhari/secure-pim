@@ -11,6 +11,7 @@ USE_DPU ?= 0
 USE_MULTI_TASKLETS ?= 1
 PGFFT_DISABLE_SIMD ?= 1
 PRINT_SIZE ?= 0
+CKKS_CONTEXT_IDX ?= 0
 
 USE_DPU_FLAG := 
 ifeq ($(USE_DPU), 1)
@@ -42,7 +43,7 @@ COPT = -g -O2 -march=native
 INC_HELIB = -I../HElib/include/
 INCLUE = -Iinclude -I$(HOME)/libs/include
 
-LIBS_DPU := `dpu-pkg-config --cflags --libs dpu` -g -DNR_TASKLETS=$(NR_TASKLETS) -DNR_DPUS=$(NR_DPUS) $(USE_DPU_FLAG) $(USE_MULTI_TASKLETS_FLAG) $(PGFFT_DISABLE_SIMD_FLAG) $(PRINT_SIZE_FLAG)
+LIBS_DPU := `dpu-pkg-config --cflags --libs dpu` -g -DNR_TASKLETS=$(NR_TASKLETS) -DNR_DPUS=$(NR_DPUS) $(USE_DPU_FLAG) $(USE_MULTI_TASKLETS_FLAG) $(PGFFT_DISABLE_SIMD_FLAG) $(PRINT_SIZE_FLAG) -DCKKS_CONTEXT_IDX=$(CKKS_CONTEXT_IDX)
 
 # INC and LIB changed to when GMP and/or NTL not in default locations
 # Put these definitions in the file local-defs, which will be included

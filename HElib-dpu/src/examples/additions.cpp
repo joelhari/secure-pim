@@ -9,7 +9,7 @@ using namespace helib;
 int main(int argc, char *argv[])
 {
   uint32_t m, bits, c;
-  GET_CKKS_CONTEXT(0)
+  GET_CKKS_CONTEXT(CKKS_CONTEXT_IDX)
   
 #ifdef PRINT_SIZE
   std::cout << "Module,Method,DataType,Size" << std::endl;
@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
   secretKey.GenSecKey();
   const PubKey &publicKey = secretKey;
 
-  size_t size = 100;
+  size_t size = 20;
   std::vector<PtxtArray> ptxts;
   std::vector<PtxtArray> pptxts;
   std::vector<Ctxt> ctxts;

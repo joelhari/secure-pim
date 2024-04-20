@@ -30,8 +30,8 @@ void dpu_add_ctxt(
     helib::IndexSet s,
     long phim)
 {
-    // std::cout << "s.card(): " << s.card() << std::endl;
-    // std::cout << "phim: " << phim << std::endl;
+    std::cout << "s.card(): " << s.card() << std::endl;
+    std::cout << "phim: " << phim << std::endl;
 
     struct dpu_set_t set, dpu;
 

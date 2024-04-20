@@ -568,12 +568,12 @@ DoubleCRT& DoubleCRT::operator-=(long num)
 DoubleCRT& DoubleCRT::operator*=(const DoubleCRT& other)
 {
   HELIB_NTIMER_START(time_mul_ctxt);
-#ifdef USE_DPU
-  return dpu_Op_MulFun(other);
-#else
+// #ifdef USE_DPU
+//   return dpu_Op_MulFun(other);
+// #else
   // return Op(other,MulFun());
   return do_mul(other);
-#endif
+// #endif
   HELIB_NTIMER_STOP(time_mul_ctxt);
 }
 
@@ -617,12 +617,12 @@ void DoubleCRT::Sub(const DoubleCRT& other, bool matchIndexSets)
 void DoubleCRT::Mul(const DoubleCRT& other, bool matchIndexSets)
 {
   HELIB_NTIMER_START(time_mul_ctxt);
-#ifdef USE_DPU
-  dpu_Op_MulFun(other);
-#else
+// #ifdef USE_DPU
+//   dpu_Op_MulFun(other);
+// #else
   // Op(other, MulFun(), matchIndexSets);
   do_mul(other, matchIndexSets);
-#endif
+// #endif
   HELIB_NTIMER_STOP(time_mul_ctxt);
 }
 

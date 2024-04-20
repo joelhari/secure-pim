@@ -2,6 +2,7 @@
 **/build
 out
 results
+results-add
 sysinfo
 
 **/src/*.o

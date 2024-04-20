@@ -310,9 +310,9 @@ static void BasicBitReverseCopy(long* NTL_RESTRICT B,
 {
   HELIB_NTIMER_START(time_basic_bit_reverse_copy);
 
-#ifdef USE_DPU
-  DPU_BasicBitReverseCopy(B, A, k);
-#else
+// #ifdef USE_DPU
+//   DPU_BasicBitReverseCopy(B, A, k);
+// #else
   NTL::Vec<long>* brc_mem = get_brc_mem();
 
   long n = 1L << k;
@@ -328,7 +328,7 @@ static void BasicBitReverseCopy(long* NTL_RESTRICT B,
 
   for (long i = 0; i < n; i++)
     B[rev[i]] = A[i];
-#endif
+// #endif
   HELIB_NTIMER_STOP(time_basic_bit_reverse_copy);
 }
 
@@ -371,9 +371,9 @@ static void COBRA(long* NTL_RESTRICT B, const long* NTL_RESTRICT A, long k)
 {
   HELIB_NTIMER_START(time_cobra);
 
-#ifdef USE_DPU
-  DPU_COBRA(B, A, k);
-#else
+// #ifdef USE_DPU
+//   DPU_COBRA(B, A, k);
+// #else
   NTL::Vec<long>* brc_mem = get_brc_mem();
 
   using namespace NTL;
@@ -429,7 +429,7 @@ static void COBRA(long* NTL_RESTRICT B, const long* NTL_RESTRICT A, long k)
   std::cout << "CModulus,COBRA,array::long," << size << std::endl;
 #endif
 
-#endif
+// #endif
   HELIB_NTIMER_STOP(time_cobra);
 }
 

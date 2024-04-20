@@ -136,7 +136,17 @@
             c = 2;          \
             break;          \
         case 30:            \
+            m = 2 * 262144; \
+            bits = 2234;    \
+            c = 2;          \
+            break;          \
+        case 31:            \
             m = 4 * 262144; \
+            bits = 2234;    \
+            c = 2;          \
+            break;          \
+        case 32:            \
+            m = 8 * 262144; \
             bits = 2234;    \
             c = 2;          \
             break;          \
