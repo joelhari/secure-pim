@@ -33,6 +33,8 @@
 #define DPU_ROW_THIS           mram_row_this
 #define DPU_ROW_OTHER          mram_row_other
 #define DPU_PI                 pi
+#define DPU_INV                inv
+#define DPU_SHAMT              shamt
 
 /* Make large numbers easier to read (and accurate) */
 /* copied from https://github.com/UBC-ECE-Sasha/PIM-common/tree/master/common/include/common.h */

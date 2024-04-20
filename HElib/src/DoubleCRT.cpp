@@ -271,6 +271,65 @@ if (isDryRun())
   return *this;
 }
 
+/**
+ * This method is a copy from  `DoubleCRT::Op(const DoubleCRT& other, Fun fun, bool matchIndexSets)`,
+ * except it does not get the `Fun fun` argument but applies the MulFun on the DPUs instead.
+ */
+DoubleCRT& DoubleCRT::dpu_Op_MulFun(const DoubleCRT& other, bool matchIndexSets)
+{
+if (isDryRun())
+    return *this;
+
+  if (&context != &other.context)
+    throw RuntimeError("DoubleCRT::Op: incompatible objects");
+
+  // VJS-FIXME: experiment to ignore matchIndexSets
+  // Match the index sets, if needed
+  if (matchIndexSets && !(map.getIndexSet() >= other.map.getIndexSet())) {
+#if 0
+    HELIB_NTIMER_START(addPrimes_1);
+    Warning("addPrimes called (1) in DoubleCRT::op");
+    addPrimes(other.map.getIndexSet() / map.getIndexSet()); // This is expensive
+#else
+    throw RuntimeError("DoubleCRT::Op: matchIndexSets not honored");
+#endif
+  }
+
+  // If you need to mod-up the other, do it on a temporary scratch copy
+  DoubleCRT tmp(context, IndexSet());
+  const IndexMap<NTL::vec_long>* other_map = &other.map;
+
+  // VJS-FIXME: experiment to insist that
+  // map.getIndexSet() <= other.map.getIndexSet()
+  if (!(map.getIndexSet() <= other.map.getIndexSet())) { // Even more expensive
+#if 0
+    HELIB_NTIMER_START(addPrimes_2);
+    tmp = other;
+    Warning("addPrimes called (2) in DoubleCRT::op");
+    tmp.addPrimes(map.getIndexSet() / other.map.getIndexSet());
+    other_map = &tmp.map;
+#else
+    throw RuntimeError(
+        "DoubleCRT::Op: !(map.getIndexSet() <= other.map.getIndexSet())");
+#endif
+  }
+
+  const IndexSet& s = map.getIndexSet();
+  long phim = context.getPhiM();
+
+  for (long i : s) {
+    NTL::vec_long& row = map[i];
+    std::cout << "before: " << row[0] << std::endl;
+  }
+  dpu_mul_ctxt(&map, other_map, &context, s, phim);
+  for (long i : s) {
+    NTL::vec_long& row = map[i];
+    std::cout << "after: " << row[0] << std::endl;
+  }
+
+  return *this;
+}
+
 // Generic operation, Fnc is AddMod, SubMod, or MulMod (from NTL's ZZ module)
 template <typename Fun>
 DoubleCRT& DoubleCRT::Op(const DoubleCRT& other, Fun fun, bool matchIndexSets)
@@ -457,11 +516,13 @@ DoubleCRT& DoubleCRT::Op(const NTL::ZZX& poly, Fun fun)
 // overloaded ops
 DoubleCRT& DoubleCRT::operator+=(const DoubleCRT& other)
 {
+  HELIB_NTIMER_START(time_add_ctxt);
 #ifdef USE_DPU
   return dpu_Op_AddFun(other);
 #else
   return Op(other, AddFun());
 #endif
+  HELIB_NTIMER_STOP(time_add_ctxt);
 }
 
 DoubleCRT& DoubleCRT::test_dpu_Op_AddFun(const DoubleCRT& other)
@@ -506,8 +567,19 @@ DoubleCRT& DoubleCRT::operator-=(long num)
 
 DoubleCRT& DoubleCRT::operator*=(const DoubleCRT& other)
 {
+  HELIB_NTIMER_START(time_mul_ctxt);
+#ifdef USE_DPU
+  return dpu_Op_MulFun(other);
+#else
   // return Op(other,MulFun());
   return do_mul(other);
+#endif
+  HELIB_NTIMER_STOP(time_mul_ctxt);
+}
+
+DoubleCRT& DoubleCRT::test_dpu_Op_MulFun(const DoubleCRT& other)
+{
+  return dpu_Op_MulFun(other);
 }
 
 DoubleCRT& DoubleCRT::operator*=(const NTL::ZZX& poly)
@@ -528,7 +600,13 @@ DoubleCRT& DoubleCRT::operator*=(long num)
 // Function versions
 void DoubleCRT::Add(const DoubleCRT& other, bool matchIndexSets)
 {
+  HELIB_NTIMER_START(time_add_ctxt);
+#ifdef USE_DPU
+  dpu_Op_AddFun(other, matchIndexSets);
+#else
   Op(other, AddFun(), matchIndexSets);
+#endif
+  HELIB_NTIMER_STOP(time_add_ctxt);
 }
 
 void DoubleCRT::Sub(const DoubleCRT& other, bool matchIndexSets)
@@ -538,8 +616,14 @@ void DoubleCRT::Sub(const DoubleCRT& other, bool matchIndexSets)
 
 void DoubleCRT::Mul(const DoubleCRT& other, bool matchIndexSets)
 {
+  HELIB_NTIMER_START(time_mul_ctxt);
+#ifdef USE_DPU
+  dpu_Op_MulFun(other);
+#else
   // Op(other, MulFun(), matchIndexSets);
   do_mul(other, matchIndexSets);
+#endif
+  HELIB_NTIMER_STOP(time_mul_ctxt);
 }
 
 // break *this into n digits,according to the primeSets in context.digits

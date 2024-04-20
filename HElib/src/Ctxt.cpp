@@ -1654,6 +1654,42 @@ void Ctxt::tensorProduct(const Ctxt& c1, const Ctxt& c2)
     noiseBound = c1.noiseBound * c2.noiseBound;
 }
 
+CtxtPart& Ctxt::test_mul_part_0(const Ctxt& other)
+{
+  const Ctxt* other_pt = &other;
+  if (parts.size() <= 0 || other_pt->parts.size() <= 0) {
+    throw RuntimeError("Parts are not valid");
+  }
+  const CtxtPart& part = other_pt->parts[0];
+  long j = getPartIndexByHandle(part.skHandle);
+
+  if (j >= 0) {
+    parts[j] *= part;
+  } else {
+    std::cout << "Ctxt::test_add_part_0 - No matching part found" << std::endl;
+  }
+
+  return parts[j];
+}
+
+CtxtPart& Ctxt::test_mul_part_0_dpu(const Ctxt& other)
+{
+  const Ctxt* other_pt = &other;
+  if (parts.size() <= 0 || other_pt->parts.size() <= 0) {
+    throw RuntimeError("Parts are not valid");
+  }
+  const CtxtPart& part = other_pt->parts[0];
+  long j = getPartIndexByHandle(part.skHandle);
+
+  if (j >= 0) {
+    parts[j].test_dpu_Op_MulFun(part);
+  } else {
+    std::cout << "Ctxt::test_add_part_0 - No matching part found" << std::endl;
+  }
+
+  return parts[j];
+}
+
 void computeIntervalForMul(double& lo,
                            double& hi,
                            const Ctxt& ctxt1,

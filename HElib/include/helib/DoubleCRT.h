@@ -107,6 +107,7 @@ private:
   // i.e., a += b is implemented but not a + b.
 
   DoubleCRT& dpu_Op_AddFun(const DoubleCRT& other, bool matchIndexSets = true);
+  DoubleCRT& dpu_Op_MulFun(const DoubleCRT& other, bool matchIndexSets = true);
 
   template <typename Fun>
   DoubleCRT& Op(const DoubleCRT& other, Fun fun, bool matchIndexSets = true);
@@ -297,6 +298,7 @@ public:
   DoubleCRT& operator+=(long num);
 
   DoubleCRT& test_dpu_Op_AddFun(const DoubleCRT& other);
+  DoubleCRT& test_dpu_Op_MulFun(const DoubleCRT& other);
 
   DoubleCRT& operator-=(const DoubleCRT& other);
   DoubleCRT& operator-=(const NTL::ZZX& poly);

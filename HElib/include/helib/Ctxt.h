@@ -845,6 +845,9 @@ public:
   CtxtPart& test_add_part_0(const Ctxt& other);
   CtxtPart& test_add_part_0_dpu(const Ctxt& other);
 
+  CtxtPart& test_mul_part_0(const Ctxt& other);
+  CtxtPart& test_mul_part_0_dpu(const Ctxt& other);
+
 private: // impl only
   void multByConstant(const FatEncodedPtxt_BGV& ptxt);
   void multByConstant(const FatEncodedPtxt_CKKS& ptxt);

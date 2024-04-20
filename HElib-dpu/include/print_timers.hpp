@@ -67,6 +67,16 @@ void print_timers()
     helib::printNamedTimer(std::cout, "time_dpu_time_basic_bit_reverse_copy_data_to_dpu");
     helib::printNamedTimer(std::cout, "time_dpu_time_basic_bit_reverse_copy_data_from_dpu");
     std::cout << std::endl;
+    helib::printNamedTimer(std::cout, "time_add_ctxt");
+    helib::printNamedTimer(std::cout, "time_dpu_time_add_ctxt");
+    helib::printNamedTimer(std::cout, "time_dpu_time_add_ctxt_data_to_dpu");
+    helib::printNamedTimer(std::cout, "time_dpu_time_add_ctxt_data_from_dpu");
+    std::cout << std::endl;
+    helib::printNamedTimer(std::cout, "time_mul_ctxt");
+    helib::printNamedTimer(std::cout, "time_dpu_time_mul_ctxt");
+    helib::printNamedTimer(std::cout, "time_dpu_time_mul_ctxt_data_to_dpu");
+    helib::printNamedTimer(std::cout, "time_dpu_time_mul_ctxt_data_from_dpu");
+    std::cout << std::endl;
     // helib::printNamedTimer(std::cout, "time_addCtxt");
     // helib::printNamedTimer(std::cout, "time_addCtxt_part_1");
     // helib::printNamedTimer(std::cout, "time_addCtxt_part_2");

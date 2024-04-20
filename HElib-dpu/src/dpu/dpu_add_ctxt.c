@@ -108,9 +108,9 @@ int main(void)
         return 0;
     }
 
-    printf(
-        "me: %u\n  DPU_SIZE: %u - BUF_SIZE: %u - C_SIZE: %d - pi: %lld\n  size: %u - nr_tasklets %u\n",
-        idx, DPU_SIZE, BUF_SIZE, C_SIZE, DPU_PI, DPU_SIZE / nr_tasklets, nr_tasklets);
+    // printf(
+    //     "me: %u\n  DPU_SIZE: %u - BUF_SIZE: %u - C_SIZE: %d - pi: %lld\n  size: %u - nr_tasklets %u\n",
+    //     idx, DPU_SIZE, BUF_SIZE, C_SIZE, DPU_PI, DPU_SIZE / nr_tasklets, nr_tasklets);
     ctxt_add(idx * DPU_SIZE / nr_tasklets, DPU_SIZE / nr_tasklets);
     // DPU_ROW_THIS[10] = AddMod(DPU_ROW_THIS[0], DPU_ROW_OTHER[0], DPU_PI);
 
