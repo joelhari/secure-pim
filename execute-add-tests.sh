@@ -30,7 +30,6 @@ make all -j40 NR_DPUS=$available_dpus USE_DPU=0 USE_MULTI_TASKLETS=1 PGFFT_DISAB
 
 echo -e ${txtcyn}Running Tests ...${txtwht}
 ./build/additions > ../results-add/res-additions-0-1-$available_dpus-41.txt
-./build/BGV_binary_arithmetic > ../results-add/res-binary-0-1-$available_dpus-41.txt
 
 
 # ---- DPU implementation -------------------------------------------------
@@ -42,7 +41,6 @@ make all -j40 NR_DPUS=$available_dpus USE_DPU=1 USE_MULTI_TASKLETS=1 PGFFT_DISAB
 
 echo -e ${txtcyn}Running Tests ...${txtwht}
 ./build/additions > ../results-add/res-additions-1-16-$available_dpus-41.txt
-./build/BGV_binary_arithmetic > ../results-add/res-binary-1-16-$available_dpus-41.txt
 
 
 # CKKS Context 42 ---------------------------------------------------------
@@ -56,7 +54,6 @@ make all -j40 NR_DPUS=$available_dpus USE_DPU=0 USE_MULTI_TASKLETS=1 PGFFT_DISAB
 
 echo -e ${txtcyn}Running Tests ...${txtwht}
 ./build/additions > ../results-add/res-additions-0-1-$available_dpus-42.txt
-./build/BGV_binary_arithmetic > ../results-add/res-binary-0-1-$available_dpus-42.txt
 
 
 # ---- DPU implementation -------------------------------------------------
@@ -68,7 +65,6 @@ make all -j40 NR_DPUS=$available_dpus USE_DPU=1 USE_MULTI_TASKLETS=1 PGFFT_DISAB
 
 echo -e ${txtcyn}Running Tests ...${txtwht}
 ./build/additions > ../results-add/res-additions-1-16-$available_dpus-42.txt
-./build/BGV_binary_arithmetic > ../results-add/res-binary-1-16-$available_dpus-42.txt
 
 
 # CKKS Context 43 ---------------------------------------------------------
@@ -82,7 +78,6 @@ make all -j40 NR_DPUS=$available_dpus USE_DPU=0 USE_MULTI_TASKLETS=1 PGFFT_DISAB
 
 echo -e ${txtcyn}Running Tests ...${txtwht}
 ./build/additions > ../results-add/res-additions-0-1-$available_dpus-43.txt
-./build/BGV_binary_arithmetic > ../results-add/res-binary-0-1-$available_dpus-43.txt
 
 
 # ---- DPU implementation -------------------------------------------------
@@ -94,7 +89,6 @@ make all -j40 NR_DPUS=$available_dpus USE_DPU=1 USE_MULTI_TASKLETS=1 PGFFT_DISAB
 
 echo -e ${txtcyn}Running Tests ...${txtwht}
 ./build/additions > ../results-add/res-additions-1-16-$available_dpus-43.txt
-./build/BGV_binary_arithmetic > ../results-add/res-binary-1-16-$available_dpus-43.txt
 
 
 # CKKS Context 44 ---------------------------------------------------------
@@ -108,7 +102,6 @@ make all -j40 NR_DPUS=$available_dpus USE_DPU=0 USE_MULTI_TASKLETS=1 PGFFT_DISAB
 
 echo -e ${txtcyn}Running Tests ...${txtwht}
 ./build/additions > ../results-add/res-additions-0-1-$available_dpus-44.txt
-./build/BGV_binary_arithmetic > ../results-add/res-binary-0-1-$available_dpus-44.txt
 
 
 # ---- DPU implementation -------------------------------------------------
@@ -120,7 +113,6 @@ make all -j40 NR_DPUS=$available_dpus USE_DPU=1 USE_MULTI_TASKLETS=1 PGFFT_DISAB
 
 echo -e ${txtcyn}Running Tests ...${txtwht}
 ./build/additions > ../results-add/res-additions-1-16-$available_dpus-44.txt
-./build/BGV_binary_arithmetic > ../results-add/res-binary-1-16-$available_dpus-44.txt
 
 
 # CKKS Context 45 ---------------------------------------------------------
@@ -134,7 +126,6 @@ make all -j40 NR_DPUS=$available_dpus USE_DPU=0 USE_MULTI_TASKLETS=1 PGFFT_DISAB
 
 echo -e ${txtcyn}Running Tests ...${txtwht}
 ./build/additions > ../results-add/res-additions-0-1-$available_dpus-45.txt
-./build/BGV_binary_arithmetic > ../results-add/res-binary-0-1-$available_dpus-45.txt
 
 
 # ---- DPU implementation -------------------------------------------------
@@ -146,7 +137,6 @@ make all -j40 NR_DPUS=$available_dpus USE_DPU=1 USE_MULTI_TASKLETS=1 PGFFT_DISAB
 
 echo -e ${txtcyn}Running Tests ...${txtwht}
 ./build/additions > ../results-add/res-additions-1-16-$available_dpus-45.txt
-./build/BGV_binary_arithmetic > ../results-add/res-binary-1-16-$available_dpus-45.txt
 
 
 # CKKS Context 46 ---------------------------------------------------------
@@ -160,7 +150,6 @@ make all -j40 NR_DPUS=$available_dpus USE_DPU=0 USE_MULTI_TASKLETS=1 PGFFT_DISAB
 
 echo -e ${txtcyn}Running Tests ...${txtwht}
 ./build/additions > ../results-add/res-additions-0-1-$available_dpus-46.txt
-./build/BGV_binary_arithmetic > ../results-add/res-binary-0-1-$available_dpus-46.txt
 
 
 # ---- DPU implementation -------------------------------------------------
@@ -172,7 +161,6 @@ make all -j40 NR_DPUS=$available_dpus USE_DPU=1 USE_MULTI_TASKLETS=1 PGFFT_DISAB
 
 echo -e ${txtcyn}Running Tests ...${txtwht}
 ./build/additions > ../results-add/res-additions-1-16-$available_dpus-46.txt
-./build/BGV_binary_arithmetic > ../results-add/res-binary-1-16-$available_dpus-46.txt
 
 
 # CKKS Context 47 ---------------------------------------------------------
@@ -186,7 +174,6 @@ make all -j40 NR_DPUS=$available_dpus USE_DPU=0 USE_MULTI_TASKLETS=1 PGFFT_DISAB
 
 echo -e ${txtcyn}Running Tests ...${txtwht}
 ./build/additions > ../results-add/res-additions-0-1-$available_dpus-47.txt
-./build/BGV_binary_arithmetic > ../results-add/res-binary-0-1-$available_dpus-47.txt
 
 
 # ---- DPU implementation -------------------------------------------------
@@ -198,7 +185,6 @@ make all -j40 NR_DPUS=$available_dpus USE_DPU=1 USE_MULTI_TASKLETS=1 PGFFT_DISAB
 
 echo -e ${txtcyn}Running Tests ...${txtwht}
 ./build/additions > ../results-add/res-additions-1-16-$available_dpus-47.txt
-./build/BGV_binary_arithmetic > ../results-add/res-binary-1-16-$available_dpus-47.txt
 
 
 # all done
