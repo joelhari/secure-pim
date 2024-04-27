@@ -75,10 +75,10 @@ void dpu_add_ctxt(
     // std::cout << "per_loop_dpus = " << per_loop_dpus << std::endl;
     // std::cout << "per_dpu_size = " << per_dpu_size << std::endl;
     // std::cout << "last_dpu_size = " << last_dpu_size << std::endl;
-    // std::cout << "nr_dpus = " << nr_dpus << std::endl;
+    std::cout << "nr_dpus = " << nr_dpus << std::endl;
     // std::cout << "sizeof(long) = " << sizeof(long) << std::endl;
 
-    DPU_ASSERT(dpu_alloc(nr_dpus, "backend=simulator", &set));
+    DPU_ASSERT(dpu_alloc(nr_dpus, NULL, &set));
     DPU_ASSERT(dpu_load(set, DPU_BINARY_ADD_CTXT, NULL));
 
     // TODO: implement iterations
@@ -262,7 +262,7 @@ void dpu_mul_ctxt(
         long pi = context->ithPrime(i);
         NTL::mulmod_t pi_inv = context->ithModulus(i).getQInv();
 
-        std::cout << "inv: " << pi_inv.inv << " - shamt: " << pi_inv.shamt << std::endl;
+        // std::cout << "inv: " << pi_inv.inv << " - shamt: " << pi_inv.shamt << std::endl;
 
         for (long j = 0; j < per_loop_dpus; j++)
         {
@@ -276,7 +276,7 @@ void dpu_mul_ctxt(
     DPU_ASSERT(dpu_broadcast_to(set, XSTR(DPU_SIZE), 0, &per_dpu_size, sizeof(uint32_t), DPU_XFER_DEFAULT));
     HELIB_NTIMER_STOP(time_dpu_time_mul_ctxt_data_to_dpu);
 
-    std::cout << "dpu launch" << std::endl;
+    // std::cout << "dpu launch" << std::endl;
     HELIB_NTIMER_START(time_dpu_time_mul_ctxt);
     DPU_ASSERT(dpu_launch(set, DPU_SYNCHRONOUS));
     HELIB_NTIMER_STOP(time_dpu_time_mul_ctxt);

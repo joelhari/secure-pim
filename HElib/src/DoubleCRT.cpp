@@ -332,7 +332,7 @@ if (isDryRun())
 
 // Generic operation, Fnc is AddMod, SubMod, or MulMod (from NTL's ZZ module)
 template <typename Fun>
-DoubleCRT& DoubleCRT::Op(const DoubleCRT& other, Fun fun, bool matchIndexSets)
+DoubleCRT& DoubleCRT::Op(const DoubleCRT& other, Fun fun, bool matchIndexSets, bool isAddition)
 {
   if (isDryRun())
     return *this;
@@ -375,17 +375,36 @@ DoubleCRT& DoubleCRT::Op(const DoubleCRT& other, Fun fun, bool matchIndexSets)
   long phim = context.getPhiM();
 
   // add/sub/mul the data, element by element, modulo the respective primes
-  for (long i : s) {
-    long pi = context.ithPrime(i);
-    NTL::vec_long& row = map[i];
-    const NTL::vec_long& other_row = (*other_map)[i];
+
+  if (isAddition && DoubleCRT::use_dpu)
+  {
+    HELIB_NTIMER_START(time_add_ctxt);
+
+    for (long i : s) {
+      long pi = context.ithPrime(i);
+      NTL::vec_long& row = map[i];
+      const NTL::vec_long& other_row = (*other_map)[i];
+
+      for (long j : range(phim))
+        row[j] = fun.apply(row[j], other_row[j], pi);
+    }
+
+    HELIB_NTIMER_STOP(time_add_ctxt);
+  }
+  else
+  {
+    for (long i : s) {
+      long pi = context.ithPrime(i);
+      NTL::vec_long& row = map[i];
+      const NTL::vec_long& other_row = (*other_map)[i];
 
 #ifdef USE_INTEL_HEXL
-    fun.apply(row.elts(), row.elts(), other_row.elts(), phim, pi);
+      fun.apply(row.elts(), row.elts(), other_row.elts(), phim, pi);
 #else
-    for (long j : range(phim))
-      row[j] = fun.apply(row[j], other_row[j], pi);
+      for (long j : range(phim))
+        row[j] = fun.apply(row[j], other_row[j], pi);
 #endif
+    }
   }
   return *this;
 }
@@ -516,13 +535,17 @@ DoubleCRT& DoubleCRT::Op(const NTL::ZZX& poly, Fun fun)
 // overloaded ops
 DoubleCRT& DoubleCRT::operator+=(const DoubleCRT& other)
 {
-  HELIB_NTIMER_START(time_add_ctxt);
+  // HELIB_NTIMER_START(time_add_ctxt);
 #ifdef USE_DPU
-  return dpu_Op_AddFun(other);
+  if (DoubleCRT::use_dpu) {
+    return dpu_Op_AddFun(other);
+  } else {
+  return Op(other, AddFun(), true, true);
+  }
 #else
-  return Op(other, AddFun());
+  return Op(other, AddFun(), true, true);
 #endif
-  HELIB_NTIMER_STOP(time_add_ctxt);
+  // HELIB_NTIMER_STOP(time_add_ctxt);
 }
 
 DoubleCRT& DoubleCRT::test_dpu_Op_AddFun(const DoubleCRT& other)
@@ -600,13 +623,17 @@ DoubleCRT& DoubleCRT::operator*=(long num)
 // Function versions
 void DoubleCRT::Add(const DoubleCRT& other, bool matchIndexSets)
 {
-  HELIB_NTIMER_START(time_add_ctxt);
+  // HELIB_NTIMER_START(time_add_ctxt);
 #ifdef USE_DPU
-  dpu_Op_AddFun(other, matchIndexSets);
+  if (DoubleCRT::use_dpu) {
+    dpu_Op_AddFun(other, matchIndexSets);
+  } else {
+    Op(other, AddFun(), matchIndexSets, true);
+  }
 #else
-  Op(other, AddFun(), matchIndexSets);
+  Op(other, AddFun(), matchIndexSets, true);
 #endif
-  HELIB_NTIMER_STOP(time_add_ctxt);
+  // HELIB_NTIMER_STOP(time_add_ctxt);
 }
 
 void DoubleCRT::Sub(const DoubleCRT& other, bool matchIndexSets)

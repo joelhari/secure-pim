@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
   secretKey.GenSecKey();
   const PubKey &publicKey = secretKey;
 
-  size_t size = 20;
+  size_t size = 10;
   std::vector<PtxtArray> ptxts;
   std::vector<PtxtArray> pptxts;
   std::vector<Ctxt> ctxts;
@@ -48,16 +48,22 @@ int main(int argc, char *argv[])
     ctxts.push_back(c1);
   }
 
+  DoubleCRT::use_dpu = true;
+
   for (int i = 0; i < size-1; ++i)
   {
     Ctxt c2 = ctxts[i];
+    // std::cout << "-------------- start addition       --------------" << std::endl;
     HELIB_NTIMER_START(time_addition);
     c2 += ctxts[i+1];
     HELIB_NTIMER_STOP(time_addition);
+    // std::cout << "-------------- stop addition        --------------" << std::endl;
     PtxtArray pp2(context);
     pp2.decrypt(c2, secretKey);
     pptxts.push_back(pp2);
   }
+
+  DoubleCRT::use_dpu = false;
 
 #ifndef PRINT_SIZE
   for (int i = 0; i < size-1; ++i)

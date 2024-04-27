@@ -110,7 +110,7 @@ private:
   DoubleCRT& dpu_Op_MulFun(const DoubleCRT& other, bool matchIndexSets = true);
 
   template <typename Fun>
-  DoubleCRT& Op(const DoubleCRT& other, Fun fun, bool matchIndexSets = true);
+  DoubleCRT& Op(const DoubleCRT& other, Fun fun, bool matchIndexSets = true, bool isAddition = false);
 
   DoubleCRT& do_mul(const DoubleCRT& other, bool matchIndexSets = true);
 
@@ -121,6 +121,9 @@ private:
   DoubleCRT& Op(const NTL::ZZX& poly, Fun fun);
 
 public:
+
+  static inline bool use_dpu = false;
+
   // Constructors and assignment operators
 
   // representing an integer polynomial as DoubleCRT. If the set of primes

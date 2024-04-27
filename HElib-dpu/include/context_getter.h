@@ -135,21 +135,78 @@
             bits = 2234;    \
             c = 2;          \
             break;          \
+        case 21:            \
+            m = 262144;     \
+            bits = 1800;    \
+            c = 2;          \
+            break;          \
         case 30:            \
             m = 2 * 262144; \
             bits = 2234;    \
             c = 2;          \
             break;          \
         case 31:            \
+            m = 2 * 262144; \
+            bits = 1800;    \
+            c = 2;          \
+            break;          \
+        case 32:            \
             m = 4 * 262144; \
             bits = 2234;    \
             c = 2;          \
             break;          \
-        case 32:            \
+        case 33:            \
+            m = 4 * 262144; \
+            bits = 1800;    \
+            c = 2;          \
+            break;          \
+        case 34:            \
             m = 8 * 262144; \
             bits = 2234;    \
             c = 2;          \
             break;          \
+        case 35:            \
+            m = 8 * 262144; \
+            bits = 1800;    \
+            c = 2;          \
+            break;          \
+                            \
+        case 41:            \
+            m = 32768;      \
+            bits = 1800;    \
+            c = 2;          \
+            break;          \
+        case 42:            \
+            m = 65536;      \
+            bits = 1800;    \
+            c = 2;          \
+            break;          \
+        case 43:            \
+            m = 131072;     \
+            bits = 1800;    \
+            c = 2;          \
+            break;          \
+        case 44:            \
+            m = 262144;     \
+            bits = 1800;    \
+            c = 2;          \
+            break;          \
+        case 45:            \
+            m = 2 * 262144; \
+            bits = 1800;    \
+            c = 2;          \
+            break;          \
+        case 46:            \
+            m = 4 * 262144; \
+            bits = 1800;    \
+            c = 2;          \
+            break;          \
+        case 47:            \
+            m = 8 * 262144; \
+            bits = 1800;    \
+            c = 2;          \
+            break;          \
+                            \
         default:            \
             m = 16384;      \
             bits = 119;     \

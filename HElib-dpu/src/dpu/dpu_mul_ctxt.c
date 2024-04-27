@@ -210,9 +210,9 @@ int main(void)
         return 0;
     }
 
-    printf(
-        "me: %u\n  DPU_SIZE: %u - BUF_SIZE: %u - C_SIZE: %d - pi: %lld\n  size: %u - nr_tasklets %u - DPU_INV: %lu - DPU_SHAMT: %ld\n",
-        idx, DPU_SIZE, BUF_SIZE, C_SIZE, DPU_PI, DPU_SIZE / nr_tasklets, nr_tasklets, DPU_INV, DPU_SHAMT);
+    // printf(
+    //     "me: %u\n  DPU_SIZE: %u - BUF_SIZE: %u - C_SIZE: %d - pi: %lld\n  size: %u - nr_tasklets %u - DPU_INV: %lu - DPU_SHAMT: %ld\n",
+    //     idx, DPU_SIZE, BUF_SIZE, C_SIZE, DPU_PI, DPU_SIZE / nr_tasklets, nr_tasklets, DPU_INV, DPU_SHAMT);
     ctxt_mul(idx * DPU_SIZE / nr_tasklets, DPU_SIZE / nr_tasklets);
     // DPU_ROW_THIS[10] = MulMod(DPU_ROW_THIS[0], DPU_ROW_OTHER[0], DPU_PI, DPU_INV, DPU_SHAMT);
 
