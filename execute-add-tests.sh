@@ -19,6 +19,31 @@ echo -e ${txtcyn}Building DPU programs using 16 tasklets ...${txtwht}
 make clean-dpu
 make dpu -j40 NR_TASKLETS=16
 
+
+# CKKS Context 40 ---------------------------------------------------------
+
+# ---- HElib implementation -----------------------------------------------
+echo -e ${txtcyn}Cleaning ...${txtwht}
+make clean
+
+echo -e ${txtcyn}Building HElib - CKKS_CONTEXT_IDX=40 ...${txtwht}
+make all -j40 NR_DPUS=$available_dpus USE_DPU=0 USE_MULTI_TASKLETS=1 PGFFT_DISABLE_SIMD=1 CKKS_CONTEXT_IDX=40
+
+echo -e ${txtcyn}Running Tests ...${txtwht}
+./build/additions > ../results-add/res-additions-0-1-$available_dpus-40.txt
+
+
+# ---- DPU implementation -------------------------------------------------
+echo -e ${txtcyn}Cleaning ...${txtwht}
+make clean
+
+echo -e ${txtcyn}Building HElib using DPUs - CKKS_CONTEXT_IDX=40 ...${txtwht}
+make all -j40 NR_DPUS=$available_dpus USE_DPU=1 USE_MULTI_TASKLETS=1 PGFFT_DISABLE_SIMD=1 CKKS_CONTEXT_IDX=40
+
+echo -e ${txtcyn}Running Tests ...${txtwht}
+./build/additions > ../results-add/res-additions-1-16-$available_dpus-40.txt
+
+
 # CKKS Context 41 ---------------------------------------------------------
 
 # ---- HElib implementation -----------------------------------------------
