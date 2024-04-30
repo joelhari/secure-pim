@@ -4,6 +4,10 @@
 
 /**
  * Sets the context variables `m`, `bits`, and `c`
+ * 0 to 20 correspond to the settings suggested to use from HElib
+ * 
+ * The remaing settings are used for testing
+ * 
  * s =  0  =>  m =  16384, bits =  119, c = 2
  * s =  1  =>  m =  32768, bits =  358, c = 6
  * s =  2  =>  m =  32768, bits =  299, c = 3
@@ -173,37 +177,37 @@
                             \
         case 41:            \
             m = 32768;      \
-            bits = 1800;    \
+            bits = 1860;    \
             c = 2;          \
             break;          \
         case 42:            \
             m = 65536;      \
-            bits = 1800;    \
+            bits = 1860;    \
             c = 2;          \
             break;          \
         case 43:            \
             m = 131072;     \
-            bits = 1800;    \
+            bits = 1860;    \
             c = 2;          \
             break;          \
         case 44:            \
             m = 262144;     \
-            bits = 1800;    \
+            bits = 1860;    \
             c = 2;          \
             break;          \
         case 45:            \
             m = 2 * 262144; \
-            bits = 1800;    \
+            bits = 1860;    \
             c = 2;          \
             break;          \
         case 46:            \
             m = 4 * 262144; \
-            bits = 1800;    \
+            bits = 1860;    \
             c = 2;          \
             break;          \
         case 47:            \
             m = 8 * 262144; \
-            bits = 1800;    \
+            bits = 1860;    \
             c = 2;          \
             break;          \
                             \
