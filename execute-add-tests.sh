@@ -191,14 +191,14 @@ make dpu -j40 NR_TASKLETS=16
 # CKKS Context 47 ---------------------------------------------------------
 
 # ---- HElib implementation -----------------------------------------------
-echo -e ${txtcyn}Cleaning ...${txtwht}
-make clean
+# echo -e ${txtcyn}Cleaning ...${txtwht}
+# make clean
 
-echo -e ${txtcyn}Building HElib - CKKS_CONTEXT_IDX=47 ...${txtwht}
-make all -j40 NR_DPUS=$available_dpus USE_DPU=0 USE_MULTI_TASKLETS=1 PGFFT_DISABLE_SIMD=1 CKKS_CONTEXT_IDX=47
+# echo -e ${txtcyn}Building HElib - CKKS_CONTEXT_IDX=47 ...${txtwht}
+# make all -j40 NR_DPUS=$available_dpus USE_DPU=0 USE_MULTI_TASKLETS=1 PGFFT_DISABLE_SIMD=1 CKKS_CONTEXT_IDX=47
 
-echo -e ${txtcyn}Running Tests ...${txtwht}
-./build/additions > ../results-add/res-additions-0-1-$available_dpus-47.txt
+# echo -e ${txtcyn}Running Tests ...${txtwht}
+# ./build/additions > ../results-add/res-additions-0-1-$available_dpus-47.txt
 
 
 # ---- DPU implementation -------------------------------------------------
