@@ -745,7 +745,7 @@ fwd_butterfly_loop(
 #endif
 
    long size_dpu;
-   GET_SIZE(40)
+   GET_SIZE(CKKS_CONTEXT_IDX)
    if (size >= size_dpu)
    {
       // TODO: uncomment when testing
@@ -912,17 +912,17 @@ new_fft_layer(cmplx_t* xp, long blocks, long size,
 #endif
 
   // TODO: uncomment when testing
-  // std::cout << "new_fft_layer: blocks * size = " << blocks << " * " << size << " = " << blocks * size << std::endl;
+  std::cout << "new_fft_layer: blocks * size = " << blocks << " * " << size << " = " << blocks * size << std::endl;
 
   LOG_FUNCTION();
 
-// #ifdef USE_DPU
-// #ifdef USE_MULTI_TASKLETS
-//   dpu_new_fft_layer_2(xp, blocks, size, wtab);
-// #else
-//   dpu_new_fft_layer(xp, blocks, size, wtab);
-// #endif
-// #else
+#ifdef USE_DPU
+#ifdef USE_MULTI_TASKLETS
+  dpu_new_fft_layer_2(xp, blocks, size, wtab);
+#else
+  dpu_new_fft_layer(xp, blocks, size, wtab);
+#endif
+#else
   size /= 2;
 
   HELIB_NTIMER_START(time_new_fft_layer);
@@ -937,7 +937,7 @@ new_fft_layer(cmplx_t* xp, long blocks, long size,
     }
   while (--blocks != 0);
   HELIB_NTIMER_STOP(time_new_fft_layer);
-// #endif
+#endif
 }
 
 void PGFFT::test_new_fft_layer(
@@ -957,17 +957,17 @@ new_fft_last_two_layers(cmplx_t* xp, long blocks, const cmplx_t* wtab)
 #endif
 
   // TODO: uncomment when testing
-  // std::cout << "new_fft_last_two_layers: blocks * size = " << blocks << " * " << 4 << " = " << blocks * 4 << std::endl;
+  std::cout << "new_fft_last_two_layers: blocks * size = " << blocks << " * " << 4 << " = " << blocks * 4 << std::endl;
 
   LOG_FUNCTION();
 
-// #ifdef USE_DPU
-// #ifdef USE_MULTI_TASKLETS
-//   dpu_new_fft_last_two_layers_2(xp, blocks);
-// #else
-//   dpu_new_fft_last_two_layers(xp, blocks);
-// #endif
-// #else
+#ifdef USE_DPU
+#ifdef USE_MULTI_TASKLETS
+  dpu_new_fft_last_two_layers_2(xp, blocks);
+#else
+  dpu_new_fft_last_two_layers(xp, blocks);
+#endif
+#else
   // 4th root of unity
   cmplx_t w = wtab[1];
 
@@ -998,7 +998,7 @@ new_fft_last_two_layers(cmplx_t* xp, long blocks, const cmplx_t* wtab)
     }
   while (--blocks != 0);
   HELIB_NTIMER_STOP(time_new_fft_last_two_layers);
-// #endif
+#endif
 }
 
 void PGFFT::test_new_fft_last_two_layers(cmplx_t* xp, long blocks)
