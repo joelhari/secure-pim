@@ -4,7 +4,7 @@
 #include "helib_double_crt_dpu.hpp"
 #include "context_getter.h"
 
-#define TEST_RUNS 1
+#define TEST_RUNS 50
 #define RANDOM_SEED 17
 
 using namespace helib;
@@ -38,7 +38,7 @@ void check_equals(std::vector<long> xs, std::vector<long> ys)
 void test_dpu_add_ctxt()
 {
     uint32_t m, bits, c;
-    GET_CKKS_CONTEXT(20);
+    GET_CKKS_CONTEXT(0);
 
     Context context =
         ContextBuilder<CKKS>()
@@ -88,8 +88,8 @@ int main(void)
 
     for (size_t i = 0; i < TEST_RUNS; i++)
     {
-        // std::cout << "running test iteration " << i + 1 << "/" << TEST_RUNS << "\r";
-        // std::cout.flush();
+        std::cout << "running test iteration " << i + 1 << "/" << TEST_RUNS << "\r";
+        std::cout.flush();
         test_dpu_add_ctxt();
     }
 

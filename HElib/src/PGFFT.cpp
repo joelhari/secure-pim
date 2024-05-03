@@ -77,6 +77,34 @@ See below for more details.
 
 #include "helib_pgfft_dpu.hpp"
 
+#define GET_SIZE(s)                \
+    {                              \
+        switch(s)                  \
+        {                          \
+        case 40:                   \
+            size_dpu = 16384 / 4;  \
+            break;                 \
+        case 41:                   \
+            size_dpu = 32768 / 4;  \
+            break;                 \
+        case 42:                   \
+            size_dpu = 65536 / 4;  \
+            break;                 \
+        case 43:                   \
+            size_dpu = 131072 / 4; \
+            break;                 \
+        case 44:                   \
+            size_dpu = 262144 / 4; \
+            break;                 \
+        case 45:                   \
+            size_dpu = 262144 / 2; \
+            break;                 \
+        case 46:                   \
+            size_dpu = 262144;     \
+            break;                 \
+    }                              \
+}
+
 /* ****************************************************************************** */
 
 
@@ -713,12 +741,18 @@ fwd_butterfly_loop(
    const cmplx_t * RESTRICT wtab)
 {
 #ifdef PRINT_SIZE
-  std::cout << "PGFFTT,fwd_butterfly_loop,array::complex<double>," << size << std::endl;
+  std::cout << "PGFFT,fwd_butterfly_loop,array::complex<double>," << size << std::endl;
 #endif
 
-   LOG_FUNCTION();
+   long size_dpu;
+   GET_SIZE(40)
+   if (size >= size_dpu)
+   {
+      // TODO: uncomment when testing
+    //   std::cout << "fwd_butterfly_loop: size = " << size << std::endl;
 
-   HELIB_NTIMER_START(time_fwd_butterfly_loop);
+      LOG_FUNCTION();
+
 // #ifdef USE_DPU
 // #ifdef USE_MULTI_TASKLETS
 //    dpu_fwd_butterfly_loop_2(size, xp0, xp1, wtab);
@@ -726,18 +760,33 @@ fwd_butterfly_loop(
 //    dpu_fwd_butterfly_loop(size, xp0, xp1, wtab);
 // #endif
 // #else
-   fwd_butterfly0(xp0[0+0], xp1[0+0]);
-   fwd_butterfly(xp0[0+1], xp1[0+1], wtab[0+1]);
-   fwd_butterfly(xp0[0+2], xp1[0+2], wtab[0+2]);
-   fwd_butterfly(xp0[0+3], xp1[0+3], wtab[0+3]);
-   for (long j = 4; j < size; j += 4) {
-     fwd_butterfly(xp0[j+0], xp1[j+0], wtab[j+0]);
-     fwd_butterfly(xp0[j+1], xp1[j+1], wtab[j+1]);
-     fwd_butterfly(xp0[j+2], xp1[j+2], wtab[j+2]);
-     fwd_butterfly(xp0[j+3], xp1[j+3], wtab[j+3]);
-   }
+      HELIB_NTIMER_START(time_fwd_butterfly_loop);
+      fwd_butterfly0(xp0[0+0], xp1[0+0]);
+      fwd_butterfly(xp0[0+1], xp1[0+1], wtab[0+1]);
+      fwd_butterfly(xp0[0+2], xp1[0+2], wtab[0+2]);
+      fwd_butterfly(xp0[0+3], xp1[0+3], wtab[0+3]);
+      for (long j = 4; j < size; j += 4) {
+        fwd_butterfly(xp0[j+0], xp1[j+0], wtab[j+0]);
+        fwd_butterfly(xp0[j+1], xp1[j+1], wtab[j+1]);
+        fwd_butterfly(xp0[j+2], xp1[j+2], wtab[j+2]);
+        fwd_butterfly(xp0[j+3], xp1[j+3], wtab[j+3]);
+      }
+      HELIB_NTIMER_STOP(time_fwd_butterfly_loop);
 // #endif
-   HELIB_NTIMER_STOP(time_fwd_butterfly_loop);
+   }
+   else
+   {
+      fwd_butterfly0(xp0[0+0], xp1[0+0]);
+      fwd_butterfly(xp0[0+1], xp1[0+1], wtab[0+1]);
+      fwd_butterfly(xp0[0+2], xp1[0+2], wtab[0+2]);
+      fwd_butterfly(xp0[0+3], xp1[0+3], wtab[0+3]);
+      for (long j = 4; j < size; j += 4) {
+        fwd_butterfly(xp0[j+0], xp1[j+0], wtab[j+0]);
+        fwd_butterfly(xp0[j+1], xp1[j+1], wtab[j+1]);
+        fwd_butterfly(xp0[j+2], xp1[j+2], wtab[j+2]);
+        fwd_butterfly(xp0[j+3], xp1[j+3], wtab[j+3]);
+      }
+   }
 }
 
 void PGFFT::test_fwd_butterfly_loop(
@@ -757,7 +806,7 @@ inv_butterfly_loop(
    const cmplx_t * RESTRICT wtab)
 {
 #ifdef PRINT_SIZE
-  std::cout << "PGFFTT,inv_butterfly_loop,array::complex<double>," << size << std::endl;
+  std::cout << "PGFFT,inv_butterfly_loop,array::complex<double>," << size << std::endl;
 #endif
 
    LOG_FUNCTION();
@@ -859,12 +908,14 @@ new_fft_layer(cmplx_t* xp, long blocks, long size,
               const cmplx_t* RESTRICT wtab)
 {
 #ifdef PRINT_SIZE
-  std::cout << "PGFFTT,new_fft_layer,array::complex<double>," << blocks * size << std::endl;
+  std::cout << "PGFFT,new_fft_layer,array::complex<double>," << blocks * size << std::endl;
 #endif
+
+  // TODO: uncomment when testing
+  // std::cout << "new_fft_layer: blocks * size = " << blocks << " * " << size << " = " << blocks * size << std::endl;
 
   LOG_FUNCTION();
 
-  HELIB_NTIMER_START(time_new_fft_layer);
 // #ifdef USE_DPU
 // #ifdef USE_MULTI_TASKLETS
 //   dpu_new_fft_layer_2(xp, blocks, size, wtab);
@@ -874,6 +925,7 @@ new_fft_layer(cmplx_t* xp, long blocks, long size,
 // #else
   size /= 2;
 
+  HELIB_NTIMER_START(time_new_fft_layer);
   do
     {
       cmplx_t* RESTRICT xp0 = xp;
@@ -884,8 +936,8 @@ new_fft_layer(cmplx_t* xp, long blocks, long size,
       xp += 2 * size;
     }
   while (--blocks != 0);
-// #endif
   HELIB_NTIMER_STOP(time_new_fft_layer);
+// #endif
 }
 
 void PGFFT::test_new_fft_layer(
@@ -901,12 +953,14 @@ static void
 new_fft_last_two_layers(cmplx_t* xp, long blocks, const cmplx_t* wtab)
 {
 #ifdef PRINT_SIZE
-  std::cout << "PGFFTT,new_fft_last_two_layers,array::complex<double>," << blocks * 4 << std::endl;
+  std::cout << "PGFFT,new_fft_last_two_layers,array::complex<double>," << blocks * 4 << std::endl;
 #endif
+
+  // TODO: uncomment when testing
+  // std::cout << "new_fft_last_two_layers: blocks * size = " << blocks << " * " << 4 << " = " << blocks * 4 << std::endl;
 
   LOG_FUNCTION();
 
-  HELIB_NTIMER_START(time_new_fft_last_two_layers);
 // #ifdef USE_DPU
 // #ifdef USE_MULTI_TASKLETS
 //   dpu_new_fft_last_two_layers_2(xp, blocks);
@@ -917,6 +971,7 @@ new_fft_last_two_layers(cmplx_t* xp, long blocks, const cmplx_t* wtab)
   // 4th root of unity
   cmplx_t w = wtab[1];
 
+  HELIB_NTIMER_START(time_new_fft_last_two_layers);
   do
     {
       cmplx_t u0 = xp[0];
@@ -942,8 +997,8 @@ new_fft_last_two_layers(cmplx_t* xp, long blocks, const cmplx_t* wtab)
       xp += 4;
     }
   while (--blocks != 0);
-// #endif
   HELIB_NTIMER_STOP(time_new_fft_last_two_layers);
+// #endif
 }
 
 void PGFFT::test_new_fft_last_two_layers(cmplx_t* xp, long blocks)
@@ -1080,7 +1135,7 @@ new_ifft_layer(cmplx_t* xp, long blocks, long size,
                const cmplx_t* RESTRICT wtab)
 {
 #ifdef PRINT_SIZE
-  std::cout << "PGFFTT,new_ifft_layer,array::complex<double>," << blocks * size << std::endl;
+  std::cout << "PGFFT,new_ifft_layer,array::complex<double>," << blocks * size << std::endl;
 #endif
 
   LOG_FUNCTION();
@@ -1122,7 +1177,7 @@ static void
 new_ifft_first_two_layers(cmplx_t* xp, long blocks, const cmplx_t* wtab)
 {
 #ifdef PRINT_SIZE
-  std::cout << "PGFFTT,new_ifft_first_two_layers,array::complex<double>," << blocks * 4 << std::endl;
+  std::cout << "PGFFT,new_ifft_first_two_layers,array::complex<double>," << blocks * 4 << std::endl;
 #endif
 
   LOG_FUNCTION();

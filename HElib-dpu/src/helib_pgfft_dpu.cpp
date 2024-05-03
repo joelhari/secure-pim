@@ -515,6 +515,8 @@ void dpu_new_fft_ifft_layer_2(
         Warning("Error in dpu_new_fft_layer: last dpu size");
     }
 
+    std::cout << "nr_dpus = " << nr_dpus << std::endl;
+
     /* ---------------------------------------------------------------------------------------------------------- */
     /* transfer data to DPUs                                                                                      */
     /*     The following if-else-statement is only used because we want to measure the time it takes to tranfer   */
@@ -825,6 +827,9 @@ void dpu_fwd_butterfly_loop_2(
 
     GET_NR_DPUS_AND_SIZE_PER_DPU(size, nr_dpus, per_dpu_size, last_dpu_size);
 
+    std::cout << "nr_dpus = " << nr_dpus << std::endl;
+    std::cout << "per_dpu_size = " << per_dpu_size << std::endl;
+
     DPU_ASSERT(dpu_alloc(nr_dpus, NULL, &set));
     DPU_ASSERT(dpu_load(set, DPU_BINARY_MULTI_FWD_BUTTERFLY_LOOP, NULL));
 
@@ -982,6 +987,8 @@ void dpu_new_fft_last_two_layers(std::complex<double> *xp, long blocks, const ch
     // convert std::complex array to dpu_complex array
     dpu_complex *dpu_xp = new dpu_complex[blocks * 4];
     convert_to_dpu_complex(xp, blocks * 4, dpu_xp);
+
+    std::cout << "nr_dpus = " << nr_dpus << std::endl;
 
     // transfer data to DPUs
     HELIB_NTIMER_START(time_dpu_time_new_fft_last_two_layers_data_to_dpu);

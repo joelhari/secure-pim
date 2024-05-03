@@ -161,6 +161,8 @@ void dpu_COBRA_1(
         nr_iterations *= 2;
     }
 
+    std::cout << "nr_dpus = " << nr_dpus << std::endl;
+
     DPU_ASSERT(dpu_alloc(nr_dpus, NULL, &set));
     DPU_ASSERT(dpu_load(set, DPU_BINARY_COBRA, NULL));
 

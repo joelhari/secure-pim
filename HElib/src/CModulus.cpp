@@ -369,8 +369,6 @@ static void DPU_COBRA(long* NTL_RESTRICT B, const long* NTL_RESTRICT A, long k)
 
 static void COBRA(long* NTL_RESTRICT B, const long* NTL_RESTRICT A, long k)
 {
-  HELIB_NTIMER_START(time_cobra);
-
 // #ifdef USE_DPU
 //   DPU_COBRA(B, A, k);
 // #else
@@ -404,6 +402,7 @@ static void COBRA(long* NTL_RESTRICT B, const long* NTL_RESTRICT A, long k)
   long size = 0;
 #endif
 
+  HELIB_NTIMER_START(time_cobra);
   for (long b = 0; b < (1L << k1); b++) {
     b1 = rev_k1[b];
     for (long a = 0; a < (1L << q); a++) {
@@ -424,13 +423,13 @@ static void COBRA(long* NTL_RESTRICT B, const long* NTL_RESTRICT A, long k)
         B[(c1 << (k1 + q)) + (b1 << q) + a1] = T[(a1 << q) + c];
     }
   }
+  HELIB_NTIMER_STOP(time_cobra);
 
 #ifdef PRINT_SIZE
   std::cout << "CModulus,COBRA,array::long," << size << std::endl;
 #endif
 
 // #endif
-  HELIB_NTIMER_STOP(time_cobra);
 }
 
 void Cmodulus::test_COBRA(long* NTL_RESTRICT B, const long* NTL_RESTRICT A, long k)
