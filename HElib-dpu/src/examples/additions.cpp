@@ -48,7 +48,7 @@ int main(int argc, char *argv[])
     ctxts.push_back(c1);
   }
 
-  /* DoubleCRT::use_dpu = true;
+  DoubleCRT::use_dpu = true;
 
   for (int i = 0; i < size-1; ++i)
   {
@@ -63,9 +63,9 @@ int main(int argc, char *argv[])
     pptxts.push_back(pp2);
   }
 
-  DoubleCRT::use_dpu = false; */
+  DoubleCRT::use_dpu = false;
 
-/* #ifndef PRINT_SIZE
+#ifndef PRINT_SIZE
   for (int i = 0; i < size-1; ++i)
   {
     PtxtArray p2 = ptxts[i];
@@ -73,7 +73,7 @@ int main(int argc, char *argv[])
     double distance = Distance(p2, pptxts[i]);
     std::cout << "[" << i << "] distance: " << distance << "\n";
   }
-#endif */
+#endif
 
   HELIB_NTIMER_STOP(time_total);
 
