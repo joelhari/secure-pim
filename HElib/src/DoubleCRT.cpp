@@ -536,15 +536,15 @@ DoubleCRT& DoubleCRT::Op(const NTL::ZZX& poly, Fun fun)
 DoubleCRT& DoubleCRT::operator+=(const DoubleCRT& other)
 {
   // HELIB_NTIMER_START(time_add_ctxt);
-#ifdef USE_DPU
-  if (DoubleCRT::use_dpu) {
-    return dpu_Op_AddFun(other);
-  } else {
+// #ifdef USE_DPU
+//   if (DoubleCRT::use_dpu) {
+//     return dpu_Op_AddFun(other);
+//   } else {
+//   return Op(other, AddFun(), true, true);
+//   }
+// #else
   return Op(other, AddFun(), true, true);
-  }
-#else
-  return Op(other, AddFun(), true, true);
-#endif
+// #endif
   // HELIB_NTIMER_STOP(time_add_ctxt);
 }
 
@@ -624,15 +624,15 @@ DoubleCRT& DoubleCRT::operator*=(long num)
 void DoubleCRT::Add(const DoubleCRT& other, bool matchIndexSets)
 {
   // HELIB_NTIMER_START(time_add_ctxt);
-#ifdef USE_DPU
-  if (DoubleCRT::use_dpu) {
-    dpu_Op_AddFun(other, matchIndexSets);
-  } else {
-    Op(other, AddFun(), matchIndexSets, true);
-  }
-#else
+// #ifdef USE_DPU
+//   if (DoubleCRT::use_dpu) {
+//     dpu_Op_AddFun(other, matchIndexSets);
+//   } else {
+//     Op(other, AddFun(), matchIndexSets, true);
+//   }
+// #else
   Op(other, AddFun(), matchIndexSets, true);
-#endif
+// #endif
   // HELIB_NTIMER_STOP(time_add_ctxt);
 }
 
