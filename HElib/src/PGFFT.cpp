@@ -749,17 +749,17 @@ fwd_butterfly_loop(
    if (size >= size_dpu)
    {
       // TODO: uncomment when testing
-      std::cout << "fwd_butterfly_loop: size = " << size << std::endl;
+    //   std::cout << "fwd_butterfly_loop: size = " << size << std::endl;
 
       LOG_FUNCTION();
 
-#ifdef USE_DPU
-#ifdef USE_MULTI_TASKLETS
-   dpu_fwd_butterfly_loop_2(size, xp0, xp1, wtab);
-#else
-   dpu_fwd_butterfly_loop(size, xp0, xp1, wtab);
-#endif
-#else
+// #ifdef USE_DPU
+// #ifdef USE_MULTI_TASKLETS
+//    dpu_fwd_butterfly_loop_2(size, xp0, xp1, wtab);
+// #else
+//    dpu_fwd_butterfly_loop(size, xp0, xp1, wtab);
+// #endif
+// #else
       HELIB_NTIMER_START(time_fwd_butterfly_loop);
       fwd_butterfly0(xp0[0+0], xp1[0+0]);
       fwd_butterfly(xp0[0+1], xp1[0+1], wtab[0+1]);
@@ -772,7 +772,7 @@ fwd_butterfly_loop(
         fwd_butterfly(xp0[j+3], xp1[j+3], wtab[j+3]);
       }
       HELIB_NTIMER_STOP(time_fwd_butterfly_loop);
-#endif
+// #endif
    }
    else
    {
