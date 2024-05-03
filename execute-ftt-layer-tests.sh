@@ -7,7 +7,7 @@ txtwht='\e[0;37m' # White Text
 echo -e ${txtwht}Set available number of DPUs to $available_dpus
 
 # create directory for test results
-mkdir -p results-add
+mkdir -p results-fft-layer
 
 cd HElib-dpu
 
@@ -30,7 +30,7 @@ echo -e ${txtcyn}Building HElib - CKKS_CONTEXT_IDX=0 ...${txtwht}
 make all -j40 NR_DPUS=$available_dpus USE_DPU=0 USE_MULTI_TASKLETS=1 PGFFT_DISABLE_SIMD=1 CKKS_CONTEXT_IDX=0
 
 echo -e ${txtcyn}Running Tests ...${txtwht}
-./build/additions > ../results-add/res-additions-0-1-$available_dpus-0.txt
+./build/additions > ../results-fft-layer/res-additions-0-1-$available_dpus-0.txt
 
 
 # ---- DPU implementation -------------------------------------------------
@@ -41,7 +41,7 @@ echo -e ${txtcyn}Building HElib using DPUs - CKKS_CONTEXT_IDX=0 ...${txtwht}
 make all -j40 NR_DPUS=$available_dpus USE_DPU=1 USE_MULTI_TASKLETS=1 PGFFT_DISABLE_SIMD=1 CKKS_CONTEXT_IDX=0
 
 echo -e ${txtcyn}Running Tests ...${txtwht}
-./build/additions > ../results-add/res-additions-1-8-$available_dpus-0.txt
+./build/additions > ../results-fft-layer/res-additions-1-8-$available_dpus-0.txt
 
 
 # all done
