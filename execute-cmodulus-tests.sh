@@ -58,14 +58,14 @@ make dpu -j40 NR_TASKLETS=1
 
 
 # ---- DPU implementation -------------------------------------------------
-echo -e ${txtcyn}Cleaning ...${txtwht}
-make clean
+# echo -e ${txtcyn}Cleaning ...${txtwht}
+# make clean
 
-echo -e ${txtcyn}Building HElib using DPUs - CKKS_CONTEXT_IDX=41 ...${txtwht}
-make all -j40 NR_DPUS=$available_dpus USE_DPU=1 USE_MULTI_TASKLETS=1 PGFFT_DISABLE_SIMD=1 CKKS_CONTEXT_IDX=41
+# echo -e ${txtcyn}Building HElib using DPUs - CKKS_CONTEXT_IDX=41 ...${txtwht}
+# make all -j40 NR_DPUS=$available_dpus USE_DPU=1 USE_MULTI_TASKLETS=1 PGFFT_DISABLE_SIMD=1 CKKS_CONTEXT_IDX=41
 
-echo -e ${txtcyn}Running Tests ...${txtwht}
-./build/additions > ../results-cmodulus/res-cmodulus-1-1-$available_dpus-41.txt
+# echo -e ${txtcyn}Running Tests ...${txtwht}
+# ./build/additions > ../results-cmodulus/res-cmodulus-1-1-$available_dpus-41.txt
 
 
 # CKKS Context 42 ---------------------------------------------------------
@@ -82,14 +82,14 @@ echo -e ${txtcyn}Running Tests ...${txtwht}
 
 
 # ---- DPU implementation -------------------------------------------------
-echo -e ${txtcyn}Cleaning ...${txtwht}
-make clean
+# echo -e ${txtcyn}Cleaning ...${txtwht}
+# make clean
 
-echo -e ${txtcyn}Building HElib using DPUs - CKKS_CONTEXT_IDX=42 ...${txtwht}
-make all -j40 NR_DPUS=$available_dpus USE_DPU=1 USE_MULTI_TASKLETS=1 PGFFT_DISABLE_SIMD=1 CKKS_CONTEXT_IDX=42
+# echo -e ${txtcyn}Building HElib using DPUs - CKKS_CONTEXT_IDX=42 ...${txtwht}
+# make all -j40 NR_DPUS=$available_dpus USE_DPU=1 USE_MULTI_TASKLETS=1 PGFFT_DISABLE_SIMD=1 CKKS_CONTEXT_IDX=42
 
-echo -e ${txtcyn}Running Tests ...${txtwht}
-./build/additions > ../results-cmodulus/res-cmodulus-1-1-$available_dpus-42.txt
+# echo -e ${txtcyn}Running Tests ...${txtwht}
+# ./build/additions > ../results-cmodulus/res-cmodulus-1-1-$available_dpus-42.txt
 
 
 # CKKS Context 43 ---------------------------------------------------------
@@ -106,14 +106,14 @@ echo -e ${txtcyn}Running Tests ...${txtwht}
 
 
 # ---- DPU implementation -------------------------------------------------
-echo -e ${txtcyn}Cleaning ...${txtwht}
-make clean
+# echo -e ${txtcyn}Cleaning ...${txtwht}
+# make clean
 
-echo -e ${txtcyn}Building HElib using DPUs - CKKS_CONTEXT_IDX=43 ...${txtwht}
-make all -j40 NR_DPUS=$available_dpus USE_DPU=1 USE_MULTI_TASKLETS=1 PGFFT_DISABLE_SIMD=1 CKKS_CONTEXT_IDX=43
+# echo -e ${txtcyn}Building HElib using DPUs - CKKS_CONTEXT_IDX=43 ...${txtwht}
+# make all -j40 NR_DPUS=$available_dpus USE_DPU=1 USE_MULTI_TASKLETS=1 PGFFT_DISABLE_SIMD=1 CKKS_CONTEXT_IDX=43
 
-echo -e ${txtcyn}Running Tests ...${txtwht}
-./build/additions > ../results-cmodulus/res-cmodulus-1-1-$available_dpus-43.txt
+# echo -e ${txtcyn}Running Tests ...${txtwht}
+# ./build/additions > ../results-cmodulus/res-cmodulus-1-1-$available_dpus-43.txt
 
 
 # CKKS Context 44 ---------------------------------------------------------
@@ -130,14 +130,14 @@ echo -e ${txtcyn}Running Tests ...${txtwht}
 
 
 # ---- DPU implementation -------------------------------------------------
-echo -e ${txtcyn}Cleaning ...${txtwht}
-make clean
+# echo -e ${txtcyn}Cleaning ...${txtwht}
+# make clean
 
-echo -e ${txtcyn}Building HElib using DPUs - CKKS_CONTEXT_IDX=44 ...${txtwht}
-make all -j40 NR_DPUS=$available_dpus USE_DPU=1 USE_MULTI_TASKLETS=1 PGFFT_DISABLE_SIMD=1 CKKS_CONTEXT_IDX=44
+# echo -e ${txtcyn}Building HElib using DPUs - CKKS_CONTEXT_IDX=44 ...${txtwht}
+# make all -j40 NR_DPUS=$available_dpus USE_DPU=1 USE_MULTI_TASKLETS=1 PGFFT_DISABLE_SIMD=1 CKKS_CONTEXT_IDX=44
 
-echo -e ${txtcyn}Running Tests ...${txtwht}
-./build/additions > ../results-cmodulus/res-cmodulus-1-1-$available_dpus-44.txt
+# echo -e ${txtcyn}Running Tests ...${txtwht}
+# ./build/additions > ../results-cmodulus/res-cmodulus-1-1-$available_dpus-44.txt
 
 
 # CKKS Context 45 ---------------------------------------------------------
@@ -167,14 +167,14 @@ echo -e ${txtcyn}Running Tests ...${txtwht}
 # CKKS Context 46 ---------------------------------------------------------
 
 # ---- HElib implementation -----------------------------------------------
-# echo -e ${txtcyn}Cleaning ...${txtwht}
-# make clean
+echo -e ${txtcyn}Cleaning ...${txtwht}
+make clean
 
-# echo -e ${txtcyn}Building HElib - CKKS_CONTEXT_IDX=46 ...${txtwht}
-# make all -j40 NR_DPUS=$available_dpus USE_DPU=0 USE_MULTI_TASKLETS=1 PGFFT_DISABLE_SIMD=1 CKKS_CONTEXT_IDX=46
+echo -e ${txtcyn}Building HElib - CKKS_CONTEXT_IDX=46 ...${txtwht}
+make all -j40 NR_DPUS=$available_dpus USE_DPU=0 USE_MULTI_TASKLETS=1 PGFFT_DISABLE_SIMD=1 CKKS_CONTEXT_IDX=46
 
-# echo -e ${txtcyn}Running Tests ...${txtwht}
-# ./build/additions > ../results-cmodulus/res-cmodulus-0-1-$available_dpus-46.txt
+echo -e ${txtcyn}Running Tests ...${txtwht}
+./build/additions > ../results-cmodulus/res-cmodulus-0-1-$available_dpus-46.txt
 
 
 # ---- DPU implementation -------------------------------------------------
