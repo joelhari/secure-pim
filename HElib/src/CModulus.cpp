@@ -369,9 +369,9 @@ static void DPU_COBRA(long* NTL_RESTRICT B, const long* NTL_RESTRICT A, long k)
 
 static void COBRA(long* NTL_RESTRICT B, const long* NTL_RESTRICT A, long k)
 {
-#ifdef USE_DPU
-  DPU_COBRA(B, A, k);
-#else
+// #ifdef USE_DPU
+//   DPU_COBRA(B, A, k);
+// #else
   NTL::Vec<long>* brc_mem = get_brc_mem();
 
   using namespace NTL;
@@ -429,7 +429,7 @@ static void COBRA(long* NTL_RESTRICT B, const long* NTL_RESTRICT A, long k)
   std::cout << "CModulus,COBRA,array::long," << size << std::endl;
 #endif
 
-#endif
+// #endif
 }
 
 void Cmodulus::test_COBRA(long* NTL_RESTRICT B, const long* NTL_RESTRICT A, long k)
