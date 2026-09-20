@@ -1,5 +1,7 @@
 # secure-pim
 
+This repository contains the code developed as part of my Master thesis which you can read [here](./thesis_harijoel.pdf).
+
 ## Setup
 
 ### Prerequisites
